@@ -69,6 +69,7 @@
             { title: '名称', dataIndex: 'name', key: 'name'},
             { title: '编码', dataIndex: 'code', key: 'code' },
             { title: '值', dataIndex: 'value', key: 'value'},
+            { title: '备注', dataIndex: 'remark', key: 'remark'},
             { title: '操作', key: 'action', scopedSlots: { customRender: 'action' },width: 200,}
         ];
         //列表分页参数定义
