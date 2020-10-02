@@ -13,7 +13,6 @@
 	<version>${project.parent.version}</version>
 
 	<properties>
-		<lion-oauth2-resource-server.version>1.0.0-SNAPSHOT</lion-oauth2-resource-server.version>
 	</properties>
 
 	<dependencies>
@@ -25,11 +24,6 @@
 		<dependency>
 			<groupId>com.lion</groupId>
 			<artifactId>lion-restful-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.lion</groupId>
-			<artifactId>lion-oauth2-resource-server</artifactId>
-			<version>${lion-oauth2-resource-server.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
