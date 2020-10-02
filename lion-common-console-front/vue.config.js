@@ -1,6 +1,7 @@
-let pages = require('@lion/lion-front-core/src/webpack/vue.config');
-let webpack=require('webpack');
-let CompressionPlugin = require("compression-webpack-plugin");
+const pages = require('@lion/lion-front-core/src/webpack/vue.config');
+const webpack=require('webpack');
+const CompressionPlugin = require("compression-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin')
 module.exports = {
     filenameHashing: true,
     configureWebpack: {
@@ -32,7 +33,8 @@ module.exports = {
             threshold: 10240, // 对超过10k的数据压缩
             minRatio: 0.8,
             deleteOriginalAssets: false // 删除源文件
-        }))
+        }));
+        config.plugin("terserPlugin").use((new TerserPlugin()));
     }
 
 }
