@@ -37,13 +37,23 @@
     import { message } from 'ant-design-vue';
     @Component({})
     export default class addOrUpdate extends Vue{
+        //点击阴影层是否关闭窗口
         private maskClosable:boolean=false;
+        //是否显示窗口
         private addOrUpdateModal:boolean=false;
+        //添加/修改数据模型
         private addOrUpdateModel:any={}
+        //校验规则
         private rules:any={
             code:[{required:true,validator:this.checkCodeIsExist,trigger:'blur'}]
         };
 
+        /**
+         * 检查编码是否存在
+         * @param rule
+         * @param value
+         * @param callback
+         */
         private checkCodeIsExist(rule :any, value:string, callback:any):void{
             if (!value || value.trim() === ''){
                 callback(new Error('请输入编码'));
@@ -70,6 +80,9 @@
             callback();
         }
 
+        /**
+         * 提交数据
+         */
         private addOrUpdate():void{
             (this.$refs.addOrUpdateForm as any).validate((validate: boolean) => {
                 if (validate) {
@@ -98,6 +111,10 @@
             });
         }
 
+        /**
+         * 获取详情
+         * @param id
+         */
         private getDetails(id:string):void{
             axios.get("/common/parameter/console/details",{params:{"id":id}})
                 .then((data)=>{
@@ -113,6 +130,9 @@
                 });
         }
 
+        /**
+         * 提交数据成功后事件
+         */
         private success():void{
             this.addOrUpdateModal = false;
             this.addOrUpdateModel={};
