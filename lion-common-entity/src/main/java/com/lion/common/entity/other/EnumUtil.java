@@ -27,7 +27,7 @@ public class EnumUtil extends BaseEntity {
     @Column(name = "class",nullable = false,unique = true)
     private String classs;
 
-    @Column(name = "value",nullable = false)
+    @Column(name = "value",nullable = false,length = 1000)
     private String value;
 
 }
