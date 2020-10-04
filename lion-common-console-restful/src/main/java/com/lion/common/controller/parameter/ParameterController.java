@@ -13,6 +13,7 @@ import com.lion.core.persistence.Validator;
 import org.omg.CORBA.IRObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      * @return
      */
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
     public IResultData list(LionPage lionPage, String code, String name){
         JpqlParameter jpqlParameter = new JpqlParameter();
         if (StringUtils.hasText(code)){
@@ -71,6 +73,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      * @return
      */
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_ADD')")
     public IResultData add(@RequestBody @Validated({Validator.Insert.class})Parameter parameter){
         parameterService.save(parameter);
         return ResultData.instance();
@@ -82,6 +85,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      * @return
      */
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_UPDATE')")
     public IResultData update(@RequestBody @Validated({Validator.Update.class})Parameter parameter){
         parameterService.update(parameter);
         return ResultData.instance();
@@ -103,6 +107,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      * @return
      */
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
     public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id",required = false) List<Long> id){
         id.forEach(i->{
             parameterService.deleteById(i);
