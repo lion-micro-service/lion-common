@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/9/15上午11:06
  */
 @RestController
-@RequestMapping("/common/parameter/console")
+@RequestMapping("/common/parameter/wechat")
 @Validated
 public class ParameterController extends BaseControllerImpl implements BaseController {
 }

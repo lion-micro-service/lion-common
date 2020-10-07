@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/9/15上午11:04
  */
 @RestController
-@RequestMapping("/common/enum/console")
+@RequestMapping("/common/enum/front")
 @Validated
 public class EnumToSelectController extends AbstractEnumToSelectController {
 }
