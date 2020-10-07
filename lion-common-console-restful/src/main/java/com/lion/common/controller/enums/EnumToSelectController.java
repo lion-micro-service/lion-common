@@ -31,10 +31,9 @@ public class EnumToSelectController extends AbstractEnumToSelectController {
 
     @PostMapping("/persistence")
     @AuthorizationIgnore
-    public IResultData persistence(@RequestBody List<EnumUtil> list){
+    public void persistence(@RequestBody List<EnumUtil> list){
         list.forEach(enumUtil -> {
             enumUtilService.save(enumUtil);
         });
-        return ResultData.instance();
     }
 }
