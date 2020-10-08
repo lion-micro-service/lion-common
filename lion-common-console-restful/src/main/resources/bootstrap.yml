@@ -35,3 +35,6 @@ spring:
           - data-id: lion-redis-common.${spring.cloud.nacos.config.file-extension}
             refresh: true
             group: GLOBAL_GROUP
+          - data-id: lion-file-common.${spring.cloud.nacos.config.file-extension}
+            refresh: true
+            group: GLOBAL_GROUP
