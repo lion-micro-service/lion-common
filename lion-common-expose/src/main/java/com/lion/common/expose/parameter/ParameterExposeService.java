@@ -9,4 +9,11 @@ import com.lion.core.service.BaseExposeService;
  * @date 2020/9/15上午10:29
  */
 public interface ParameterExposeService extends BaseExposeService<Parameter> {
+
+    /**
+     *
+     * @param code
+     * @param value
+     */
+    public void testSeataTransactional(String code,String value);
 }

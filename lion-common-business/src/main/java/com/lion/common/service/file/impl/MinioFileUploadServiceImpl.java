@@ -1,14 +1,15 @@
 package com.lion.common.service.file.impl;
 
-import com.lion.common.config.properties.MinioProperties;
 import com.lion.common.entity.file.File;
 import com.lion.common.service.file.FileUploadService;
+import com.lion.config.properties.MinioProperties;
 import io.minio.MinioClient;
 import io.minio.ObjectWriteResponse;
 import io.minio.PutObjectArgs;
 import io.minio.UploadObjectArgs;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.UUID;
  **/
 @Service
 @ConditionalOnProperty(prefix = "file",name = "store.type",havingValue = "minio")
+@ConditionalOnClass({MinioClient.class})
 public class MinioFileUploadServiceImpl implements FileUploadService {
 
     @Autowired
