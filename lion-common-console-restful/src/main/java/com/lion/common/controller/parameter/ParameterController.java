@@ -5,6 +5,7 @@ import com.lion.common.service.parameter.ParameterService;
 import com.lion.constant.SearchConstant;
 import com.lion.core.IResultData;
 import com.lion.core.LionPage;
+import com.lion.core.PageResultData;
 import com.lion.core.ResultData;
 import com.lion.core.controller.BaseController;
 import com.lion.core.controller.impl.BaseControllerImpl;
@@ -44,7 +45,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      */
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
-    public IResultData list(LionPage lionPage, String code, String name){
+    public PageResultData<List<Parameter>> list(LionPage lionPage, String code, String name){
         JpqlParameter jpqlParameter = new JpqlParameter();
         if (StringUtils.hasText(code)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_code",code);
@@ -54,7 +55,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         }
         jpqlParameter.setSortParameter("createDateTime", Sort.Direction.DESC);
         lionPage.setJpqlParameter(jpqlParameter);
-        return (IResultData) this.parameterService.findNavigator(lionPage);
+        return (PageResultData) this.parameterService.findNavigator(lionPage);
     }
 
     /**
@@ -63,8 +64,8 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      * @return
      */
     @GetMapping("/check/code/exist")
-    public IResultData checkCodeIsExist(@NotBlank(message = "编码不能为空")String code, Long id){
-        return ResultData.instance().setData("isExist",parameterService.checkCodeExist(code,id));
+    public IResultData<Boolean> checkCodeIsExist(@NotBlank(message = "编码不能为空")String code, Long id){
+        return ResultData.instance().setData(parameterService.checkCodeExist(code,id));
     }
 
     /**
@@ -97,8 +98,8 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
      * @return
      */
     @GetMapping("/details")
-    public IResultData details(@NotNull(message = "id不能为空")Long id){
-        return ResultData.instance().setData("parameter",parameterService.findById(id));
+    public IResultData<Boolean> details(@NotNull(message = "id不能为空")Long id){
+        return ResultData.instance().setData(parameterService.findById(id));
     }
 
     /**

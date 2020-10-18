@@ -29,11 +29,11 @@ public abstract class AbstractEnumToSelectController {
 
     @GetMapping("/to/select")
     @AuthorizationIgnore
-    public IResultData enumToSelect(@NotBlank(message = "请输入enumClass") String enumClass) throws JsonProcessingException {
+    public IResultData<List<Map<String,String>>> enumToSelect(@NotBlank(message = "请输入enumClass") String enumClass) throws JsonProcessingException {
         EnumUtil enumUtil = enumUtilService.find(enumClass);
         if (Objects.nonNull(enumUtil)) {
             LionObjectMapper objectMapper = new LionObjectMapper();
-            return ResultData.instance().setData("enum",objectMapper.readValue(enumUtil.getValue(), List.class));
+            return ResultData.instance().setData(objectMapper.readValue(enumUtil.getValue(), List.class));
         }
         return ResultData.instance();
     }

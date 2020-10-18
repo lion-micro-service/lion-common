@@ -4,6 +4,9 @@ import com.lion.annotation.AuthorizationIgnore;
 import com.lion.core.IResultData;
 import com.lion.core.ResultData;
 import com.wf.captcha.SpecCaptcha;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -27,7 +30,7 @@ public abstract class AbstractCaptchaController {
 
     @GetMapping("/fresh")
     @AuthorizationIgnore
-    public IResultData captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public IResultData<Captcha> captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();
         String key = UUID.randomUUID().toString();
@@ -35,8 +38,19 @@ public abstract class AbstractCaptchaController {
         redisTemplate.opsForValue().set(key,verCode,30, TimeUnit.SECONDS);
         // 将key和base64返回给前端
         ResultData resultData = ResultData.instance();
-        resultData.setData("key",key);
-        resultData.setData("image",specCaptcha.toBase64());
+        Captcha captcha = new Captcha();
+        captcha.setKey(key);
+        captcha.setImage(specCaptcha.toBase64());
         return resultData;
     }
+}
+@ApiModel
+@Data
+class Captcha{
+
+    @ApiModelProperty("")
+    private String key;
+
+    @ApiModelProperty("验证码图片base64编码")
+    private String image;
 }
