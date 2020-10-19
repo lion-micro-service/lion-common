@@ -3,10 +3,7 @@ package com.lion.common.controller.parameter;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.service.parameter.ParameterService;
 import com.lion.constant.SearchConstant;
-import com.lion.core.IResultData;
-import com.lion.core.LionPage;
-import com.lion.core.PageResultData;
-import com.lion.core.ResultData;
+import com.lion.core.*;
 import com.lion.core.controller.BaseController;
 import com.lion.core.controller.impl.BaseControllerImpl;
 import com.lion.core.persistence.JpqlParameter;
@@ -43,7 +40,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
     @ApiOperation(value = "列表",notes = "列表")
-    public PageResultData<List<Parameter>> list(LionPage lionPage, String code, String name){
+    public IPageResultData<List<Parameter>> list(LionPage lionPage, String code, String name){
         JpqlParameter jpqlParameter = new JpqlParameter();
         if (StringUtils.hasText(code)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_code",code);
