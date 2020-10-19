@@ -5,13 +5,13 @@ import com.lion.common.service.file.FileService;
 import com.lion.common.service.file.FileUploadService;
 import com.lion.core.IResultData;
 import com.lion.core.ResultData;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,11 @@ public abstract class AbstractFileController {
 
     @PostMapping("/upload")
     @AuthorizationIgnore
-    public IResultData<List<File>> upload(StandardMultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+    @ApiOperation(value = "上传文件(支持多文件)",notes = "上传文件(支持多文件)")
+//    @ApiImplicitParams(value = {
+//            @ApiImplicitParam(value = "", name = "",type = "multipart/form-data")
+//    })
+    public IResultData<List<File>> upload(@ApiIgnore StandardMultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
         Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
         List<File> fileList = new ArrayList<File>();
         for(String originalFileName : files.keySet()) {

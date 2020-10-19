@@ -6,6 +6,7 @@ import com.lion.core.ResultData;
 import com.wf.captcha.SpecCaptcha;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,6 +31,7 @@ public abstract class AbstractCaptchaController {
 
     @GetMapping("/fresh")
     @AuthorizationIgnore
+    @ApiOperation(value = "获取二维码", notes = "获取二维码")
     public IResultData<Captcha> captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();

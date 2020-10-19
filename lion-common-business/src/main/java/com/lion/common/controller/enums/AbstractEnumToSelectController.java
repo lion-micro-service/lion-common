@@ -8,6 +8,7 @@ import com.lion.core.IResultData;
 import com.lion.core.LionObjectMapper;
 import com.lion.core.ResultData;
 import com.lion.core.service.BaseService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public abstract class AbstractEnumToSelectController {
 
     @GetMapping("/to/select")
     @AuthorizationIgnore
+    @ApiOperation(value = "枚举转selelct下拉框", notes = "枚举转selelct下拉框")
     public IResultData<List<Map<String,String>>> enumToSelect(@NotBlank(message = "请输入enumClass") String enumClass) throws JsonProcessingException {
         EnumUtil enumUtil = enumUtilService.find(enumClass);
         if (Objects.nonNull(enumUtil)) {

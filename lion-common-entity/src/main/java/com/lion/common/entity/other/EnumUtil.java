@@ -2,6 +2,8 @@ package com.lion.common.entity.other;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lion.core.persistence.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;
@@ -20,13 +22,15 @@ import javax.persistence.*;
 @DynamicUpdate
 @DynamicInsert
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime","createUserId","updateUserId"})
+@ApiModel(description = "保存所有微服务的枚举值，用于前端生成select下拉框")
 public class EnumUtil extends BaseEntity {
     private static final long serialVersionUID = -2124525197256620973L;
 
+    @ApiModelProperty(value = "枚举key值")
     @Column(name = "class",nullable = false,unique = true)
     private String classs;
 
+    @ApiModelProperty(value = "枚举value值")
     @Column(name = "value",nullable = false,length = 1000)
     private String value;
 

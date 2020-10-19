@@ -2,6 +2,8 @@ package com.lion.common.entity.file;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lion.core.persistence.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;
@@ -24,15 +26,18 @@ import javax.persistence.Table;
 @DynamicUpdate
 @DynamicInsert
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime","createUserId","updateUserId"})
+@ApiModel(description = "文件")
 public class File extends BaseEntity {
 
+    @ApiModelProperty(value = "新选择的用户")
     @Column(name = "original_file_name", nullable = false, columnDefinition = " varchar(255) comment '原始文件名' ")
     private String originalFileName;
 
+    @ApiModelProperty(value = "文件大小")
     @Column(name = "size", nullable = false, columnDefinition = " BIGINT(18) comment '文件大小（bit）' ")
     private Long size;
 
+    @ApiModelProperty(value = "文件下载路径")
     @Column(name = "url", nullable = false, columnDefinition = " varchar(255) comment '文件下载路径' ")
     private String url;
 }

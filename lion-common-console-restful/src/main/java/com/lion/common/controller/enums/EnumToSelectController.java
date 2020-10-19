@@ -8,6 +8,8 @@ import com.lion.common.service.other.EnumUtilService;
 import com.lion.core.IResultData;
 import com.lion.core.LionObjectMapper;
 import com.lion.core.ResultData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/common/enum/console")
+@Api(tags = {"枚举转selelct下拉框"})
 public class EnumToSelectController extends AbstractEnumToSelectController {
 
     @Autowired

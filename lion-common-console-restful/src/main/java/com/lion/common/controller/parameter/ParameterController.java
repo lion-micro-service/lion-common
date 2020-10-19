@@ -11,6 +11,9 @@ import com.lion.core.controller.BaseController;
 import com.lion.core.controller.impl.BaseControllerImpl;
 import com.lion.core.persistence.JpqlParameter;
 import com.lion.core.persistence.Validator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.omg.CORBA.IRObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -31,20 +34,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/common/parameter/console")
 @Validated
+@Api(tags = {"系统参数管理"})
 public class ParameterController extends BaseControllerImpl implements BaseController {
 
     @Autowired
     private ParameterService parameterService;
 
-    /**
-     * 列表
-     * @param lionPage
-     * @param code
-     * @param name
-     * @return
-     */
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
+    @ApiOperation(value = "列表",notes = "列表")
     public PageResultData<List<Parameter>> list(LionPage lionPage, String code, String name){
         JpqlParameter jpqlParameter = new JpqlParameter();
         if (StringUtils.hasText(code)){
@@ -58,21 +56,13 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         return (PageResultData) this.parameterService.findNavigator(lionPage);
     }
 
-    /**
-     * 检查编码是否存在
-     * @param code
-     * @return
-     */
     @GetMapping("/check/code/exist")
-    public IResultData<Boolean> checkCodeIsExist(@NotBlank(message = "编码不能为空")String code, Long id){
+    @ApiOperation(value = "检查编码是否存在",notes = "检查编码是否存在")
+    public IResultData<Boolean> checkCodeIsExist(@NotBlank(message = "编码不能为空")String code,@ApiParam(value = "修改时需要传,新增时不需要传") Long id){
         return ResultData.instance().setData(parameterService.checkCodeExist(code,id));
     }
 
-    /**
-     * 新增参数设置
-     * @param parameter
-     * @return
-     */
+    @ApiOperation(value = "新增参数设置",notes = "新增参数设置")
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_ADD')")
     public IResultData add(@RequestBody @Validated({Validator.Insert.class})Parameter parameter){
@@ -80,36 +70,24 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         return ResultData.instance();
     }
 
-    /**
-     * 修改参数设置
-     * @param parameter
-     * @return
-     */
     @PutMapping("/update")
+    @ApiOperation(value = "修改参数设置",notes = "修改参数设置")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_UPDATE')")
     public IResultData update(@RequestBody @Validated({Validator.Update.class})Parameter parameter){
         parameterService.update(parameter);
         return ResultData.instance();
     }
 
-    /**
-     * 获取详情
-     * @param id
-     * @return
-     */
+    @ApiOperation(value = "获取详情",notes = "获取详情")
     @GetMapping("/details")
     public IResultData<Boolean> details(@NotNull(message = "id不能为空")Long id){
         return ResultData.instance().setData(parameterService.findById(id));
     }
 
-    /**
-     * 删除参数设置
-     * @param id
-     * @return
-     */
+    @ApiOperation(value = "删除参数设置",notes = "删除参数设置")
     @DeleteMapping("/delete")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
-    public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id",required = false) List<Long> id){
+    public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id",required = false) @ApiParam(value = "数组(id=1&id=2)")  List<Long> id){
         id.forEach(i->{
             parameterService.deleteById(i);
         });
