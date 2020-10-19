@@ -41,6 +41,7 @@ public abstract class AbstractCaptchaController {
         Captcha captcha = new Captcha();
         captcha.setKey(key);
         captcha.setImage(specCaptcha.toBase64());
+        resultData.setData(captcha);
         return resultData;
     }
 }

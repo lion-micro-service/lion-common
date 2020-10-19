@@ -65,7 +65,7 @@
                             callback(new Error('异常错误！请检查'));
                             return;
                         }
-                        if (data.data.isExist) {
+                        if (data.data) {
                             callback(new Error('编码已存在'));
                         }else {
                             callback();
@@ -118,8 +118,8 @@
         private getDetails(id:string):void{
             axios.get("/common/parameter/console/details",{params:{"id":id}})
                 .then((data)=>{
-                    if (Object(data).status === 200 && data.data.parameter){
-                        let parameter = data.data.parameter;
+                    if (Object(data).status === 200){
+                        let parameter = data.data;
                         this.addOrUpdateModel=parameter;
                         this.addOrUpdateModal=true;
                     }
