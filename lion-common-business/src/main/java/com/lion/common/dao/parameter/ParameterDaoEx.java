@@ -6,4 +6,5 @@ package com.lion.common.dao.parameter;
  * @date 2020/9/14下午5:15
  */
 public interface ParameterDaoEx {
+
 }

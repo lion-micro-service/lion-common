@@ -4,8 +4,15 @@ import com.lion.common.dao.parameter.ParameterDao;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.expose.parameter.ParameterExposeService;
 import com.lion.core.service.impl.BaseExposeServiceImpl;
+import com.lion.exception.BusinessException;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author mr.liu
@@ -21,7 +28,13 @@ public class ParameterExposeServiceImpl extends BaseExposeServiceImpl<Parameter>
     @Override
     public void testSeataTransactional(String code, String value) {
         Parameter parameter = parameterDao.findFirstByCode(code);
-        parameter.setValue(value);
-        this.update(parameter);
+        if (Objects.isNull(parameter)){
+            parameter = new Parameter();
+            parameter.setCode(code);
+            parameter.setValue(value);
+        }else {
+            parameter.setValue(UUID.randomUUID().toString());
+        }
+        this.save(parameter);
     }
 }
