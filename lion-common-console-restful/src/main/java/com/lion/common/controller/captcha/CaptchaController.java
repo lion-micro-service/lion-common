@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/common/captcha/console")
-@Api(tags = {"二维码"})
+@Api(tags = {"验证码"})
 public class CaptchaController extends AbstractCaptchaController {
 }

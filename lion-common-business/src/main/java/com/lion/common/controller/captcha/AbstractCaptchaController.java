@@ -31,7 +31,7 @@ public abstract class AbstractCaptchaController {
 
     @GetMapping("/fresh")
     @AuthorizationIgnore
-    @ApiOperation(value = "获取二维码", notes = "获取二维码")
+    @ApiOperation(value = "获取验证码", notes = "获取验证码")
     public IResultData<Captcha> captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();
