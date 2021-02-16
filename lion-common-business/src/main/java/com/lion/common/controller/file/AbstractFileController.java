@@ -1,12 +1,12 @@
 package com.lion.common.controller.file;
 
 import com.lion.annotation.AuthorizationIgnore;
+import com.lion.common.entity.file.File;
 import com.lion.common.service.file.FileService;
 import com.lion.common.service.file.FileUploadService;
 import com.lion.core.IResultData;
 import com.lion.core.ResultData;
-import io.swagger.annotations.*;
-import lombok.Data;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,22 +49,10 @@ public abstract class AbstractFileController {
             if (Objects.nonNull(entity)) {
                 fileService.save(entity);
                 if (Objects.nonNull(entity.getId())) {
-                    File file1 = new File();
-                    file1.setId(entity.getId());
-                    file1.setUrl(entity.getUrl());
-                    fileList.add(file1);
+                    fileList.add(entity);
                 }
             }
         }
         return ResultData.instance().setData(fileList);
     }
-}
-
-@ApiModel
-@Data
-class File {
-    @ApiModelProperty("文件ID")
-    private Long id;
-    @ApiModelProperty("文件url")
-    private String url;
 }

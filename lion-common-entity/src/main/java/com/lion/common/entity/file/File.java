@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @ApiModel(description = "文件")
 public class File extends BaseEntity {
 
-    @ApiModelProperty(value = "新选择的用户")
+    @ApiModelProperty(value = "原始文件名")
     @Column(name = "original_file_name", nullable = false, columnDefinition = " varchar(255) comment '原始文件名' ")
     private String originalFileName;
 
