@@ -195,6 +195,7 @@
                     }
                 }).catch((fail)=>{
             }).finally(()=>{
+                this.selectedRowKeys=[];
             });
         }
 
