@@ -30,24 +30,24 @@ import javax.validation.constraints.Pattern;
 public class Parameter extends BaseEntity {
 
     @ApiModelProperty(value = "编码")
-    @Column(name = "code", unique = true, nullable = false, columnDefinition = " varchar(30) comment '编码' ")
+    @Column(name = "code", unique = true, nullable = false)
     @NotBlank(message = "编码不能为空", groups = {Validator.Insert.class, Validator.Update.class})
     @Length(min = 3, max = 30, message = "编码为{min}-{max}个字符", groups = {Validator.Insert.class, Validator.Update.class})
     @Pattern(regexp = "[A-Za-z0-9\\-]{3,30}", message = "编码只能是3-30个(英文/数字)字符", groups = {Validator.Insert.class, Validator.Update.class})
     private String code;
 
     @ApiModelProperty(value = "名称")
-    @Column(name = "name", columnDefinition =" varchar(30) comment '名称' ")
+    @Column(name = "name")
     @Length(min = 1, max = 30, message = "编码为{min}-{max}个字符", groups = {Validator.Insert.class, Validator.Update.class})
     private String name;
 
     @ApiModelProperty(value = "值")
-    @Column(name = "value", nullable = false, columnDefinition = " varchar(255) comment '值' ")
+    @Column(name = "value", nullable = false)
     @NotBlank(message = "值不能为空", groups = {Validator.Insert.class, Validator.Update.class})
     @Length(min = 1, max = 255, message = "值为{min}-{max}个字符", groups = {Validator.Insert.class, Validator.Update.class})
     private String value;
 
     @ApiModelProperty(value = "备注")
-    @Column(name = "remark",  columnDefinition = " varchar(255) comment '备注' ")
+    @Column(name = "remark")
     private String remark;
 }

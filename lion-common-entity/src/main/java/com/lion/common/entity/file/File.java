@@ -30,14 +30,14 @@ import javax.persistence.Table;
 public class File extends BaseEntity {
 
     @ApiModelProperty(value = "原始文件名")
-    @Column(name = "original_file_name", nullable = false, columnDefinition = " varchar(255) comment '原始文件名' ")
+    @Column(name = "original_file_name", nullable = false)
     private String originalFileName;
 
     @ApiModelProperty(value = "文件大小")
-    @Column(name = "size", nullable = false, columnDefinition = " BIGINT(18) comment '文件大小（bit）' ")
+    @Column(name = "size", nullable = false)
     private Long size;
 
     @ApiModelProperty(value = "文件下载路径")
-    @Column(name = "url", nullable = false, columnDefinition = " varchar(255) comment '文件下载路径' ")
+    @Column(name = "url", nullable = false)
     private String url;
 }
