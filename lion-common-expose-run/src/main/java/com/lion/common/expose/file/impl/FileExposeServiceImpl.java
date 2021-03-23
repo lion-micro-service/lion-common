@@ -5,6 +5,8 @@ import com.lion.common.expose.file.FileExposeService;
 import com.lion.core.service.impl.BaseExposeServiceImpl;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import java.util.Objects;
+
 /**
  * @description:
  * @author: mr.liu
@@ -12,4 +14,16 @@ import org.apache.dubbo.config.annotation.DubboService;
  **/
 @DubboService(interfaceClass = FileExposeService.class)
 public class FileExposeServiceImpl extends BaseExposeServiceImpl<File> implements FileExposeService {
+
+    @Override
+    public String getUrl(Long id) {
+        if (Objects.isNull(id)){
+            return "";
+        }
+        File file = this.findById(id);
+        if (Objects.isNull(file)){
+            return "";
+        }
+        return file.getUrl();
+    }
 }

@@ -22,7 +22,7 @@ import javax.validation.constraints.Pattern;
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "t_common_parameter",indexes = {@Index(columnList = "create_date_time") })
+@Table(name = "t_parameter",indexes = {@Index(columnList = "create_date_time") })
 @DynamicUpdate
 @DynamicInsert
 @Data

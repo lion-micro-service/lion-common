@@ -18,7 +18,7 @@ import javax.persistence.*;
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "t_common_enum_util")
+@Table(name = "t_enum_util")
 @DynamicUpdate
 @DynamicInsert
 @Data

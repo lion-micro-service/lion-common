@@ -22,7 +22,7 @@ import javax.persistence.Table;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "t_common_file",indexes = {@Index(columnList = "create_date_time") })
+@Table(name = "t_file",indexes = {@Index(columnList = "create_date_time") })
 @DynamicUpdate
 @DynamicInsert
 @Data
