@@ -2,7 +2,6 @@ package com.lion.common.expose.file.impl;
 
 import com.lion.common.entity.file.File;
 import com.lion.common.expose.file.FileExposeService;
-import com.lion.core.service.impl.BaseExposeServiceImpl;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.Objects;
@@ -13,7 +12,7 @@ import java.util.Objects;
  * @create: 2020-10-09 09:40
  **/
 @DubboService(interfaceClass = FileExposeService.class)
-public class FileExposeServiceImpl extends BaseExposeServiceImpl<File> implements FileExposeService {
+public class FileExposeServiceImpl extends com.lion.core.service.impl.BaseServiceImpl<File> implements FileExposeService, com.lion.core.service.BaseService<File> {
 
     @Override
     public String getUrl(Long id) {

@@ -3,13 +3,8 @@ package com.lion.common.expose.parameter.impl;
 import com.lion.common.dao.parameter.ParameterDao;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.expose.parameter.ParameterExposeService;
-import com.lion.core.service.impl.BaseExposeServiceImpl;
-import com.lion.exception.BusinessException;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -20,7 +15,7 @@ import java.util.UUID;
  * @date 2020/9/15上午10:29
  */
 @DubboService(interfaceClass = ParameterExposeService.class)
-public class ParameterExposeServiceImpl extends BaseExposeServiceImpl<Parameter> implements ParameterExposeService {
+public class ParameterExposeServiceImpl extends com.lion.core.service.impl.BaseServiceImpl<Parameter> implements ParameterExposeService, com.lion.core.service.BaseService<Parameter> {
 
     @Autowired
     private ParameterDao parameterDao;
