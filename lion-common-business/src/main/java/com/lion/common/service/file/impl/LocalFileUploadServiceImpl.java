@@ -27,12 +27,13 @@ public class LocalFileUploadServiceImpl implements FileUploadService {
 
     @Override
     public File upload(MultipartFile file) throws Exception {
-        String filePath = storage_path +(Objects.equals(storage_path.substring(storage_path.length()-1),"/")?"":"/")+ UUID.randomUUID().toString()+file.getOriginalFilename();
+        String fileName = UUID.randomUUID().toString()+file.getOriginalFilename();
+        String filePath = storage_path +(Objects.equals(storage_path.substring(storage_path.length()-1),"/")?"":"/")+fileName;
         FileUtils.copyInputStreamToFile(file.getInputStream(), new java.io.File(filePath));
         File entity = new File();
         entity.setSize(file.getSize());
         entity.setOriginalFileName(file.getOriginalFilename());
-        entity.setUrl(filePath);
+        entity.setUrl(fileName);
         return entity;
     }
 }
