@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2020-10-08 15:47
  **/
 @RestController
-@RequestMapping("/common/file/console")
+@RequestMapping("/file/console")
 @Api(tags = {"文件"})
 public class FileController extends AbstractFileController {
 

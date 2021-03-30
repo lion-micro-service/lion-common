@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2020-10-07 14:34
  **/
 @RestController
-@RequestMapping("/common/captcha/console")
+@RequestMapping("/captcha/console")
 @Api(tags = {"验证码"})
 public class CaptchaController extends AbstractCaptchaController {
 }

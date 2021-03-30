@@ -28,7 +28,7 @@ import java.util.List;
  * @date 2020/9/15上午11:06
  */
 @RestController
-@RequestMapping("/common/parameter/console")
+@RequestMapping("/parameter/console")
 @Validated
 @Api(tags = {"系统参数管理"})
 public class ParameterController extends BaseControllerImpl implements BaseController {

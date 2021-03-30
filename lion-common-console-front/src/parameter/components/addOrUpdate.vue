@@ -59,7 +59,7 @@
                 callback(new Error('请输入编码'));
                 return;
             }else if (value && value.trim() !== ''){
-                axios.get("/common/parameter/console/check/code/exist",{params:{"code":this.addOrUpdateModel.code,"id":this.addOrUpdateModel.id}})
+                axios.get("/lion-common-console-restful/parameter/console/check/code/exist",{params:{"code":this.addOrUpdateModel.code,"id":this.addOrUpdateModel.id}})
                     .then((data)=> {
                         if (Object(data).status !== 200){
                             callback(new Error('异常错误！请检查'));
@@ -87,7 +87,7 @@
             (this.$refs.addOrUpdateForm as any).validate((validate: boolean) => {
                 if (validate) {
                     if (this.addOrUpdateModel.id){
-                        axios.put("/common/parameter/console/update",this.addOrUpdateModel)
+                        axios.put("/lion-common-console-restful/parameter/console/update",this.addOrUpdateModel)
                             .then((data) =>{
                                 if (Object(data).status === 200){
                                     message.success(Object(data).message);
@@ -97,7 +97,7 @@
                         }).finally(()=>{
                         })
                     }else {
-                        axios.post("/common/parameter/console/add",this.addOrUpdateModel)
+                        axios.post("/lion-common-console-restful/parameter/console/add",this.addOrUpdateModel)
                             .then((data) =>{
                                 if (Object(data).status === 200){
                                     message.success(Object(data).message);
@@ -116,7 +116,7 @@
          * @param id
          */
         private getDetails(id:string):void{
-            axios.get("/common/parameter/console/details",{params:{"id":id}})
+            axios.get("/lion-common-console-restful/parameter/console/details",{params:{"id":id}})
                 .then((data)=>{
                     if (Object(data).status === 200){
                         let parameter = data.data;

@@ -25,7 +25,7 @@ import java.util.Objects;
  * @date 2020/9/15上午11:04
  */
 @RestController
-@RequestMapping("/common/enum/console")
+@RequestMapping("/enum/console")
 @Api(tags = {"枚举转selelct下拉框"})
 public class EnumToSelectController extends AbstractEnumToSelectController {
 

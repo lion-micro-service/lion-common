@@ -111,7 +111,7 @@
                 return;
             }
             this.loading=true;
-            axios.get("/common/parameter/console/list",{params:this.searchModel})
+            axios.get("/lion-common-console-restful/parameter/console/list",{params:this.searchModel})
                 .then((data)=>{
                     this.data=data.data;
                     this.paginationProps.total=Number((Object(data)).totalElements);
@@ -184,7 +184,7 @@
          * @param id
          */
         private delete(id:any):void{
-            axios.delete("/common/parameter/console/delete",{params:{id:id},
+            axios.delete("/lion-common-console-restful/parameter/console/delete",{params:{id:id},
                 paramsSerializer: params => {
                     return qs.stringify(params, { indices: false })
                 }})
