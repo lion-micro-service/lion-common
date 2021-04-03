@@ -51,7 +51,7 @@ public class MinioFileUploadServiceImpl implements FileUploadService {
             File entity = new File();
             entity.setSize(file.getSize());
             entity.setOriginalFileName(file.getOriginalFilename());
-            entity.setUrl("/" + FileUploadService.URL_PREFIX + "/" + MinioProperties.PUBLIC_BUCKET + "/" + minioProperties.getBucket() + "/" + fileStoreName);
+            entity.setUrl("/" + MinioProperties.PUBLIC_BUCKET + "/" + minioProperties.getBucket() + "/" + fileStoreName);
             return entity;
         }
         return null;

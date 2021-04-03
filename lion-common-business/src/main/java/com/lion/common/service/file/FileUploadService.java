@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  **/
 public interface FileUploadService {
 
-    public static final String URL_PREFIX = "file";
+    public static final String URL_PREFIX = "/file";
 
     /**
      *

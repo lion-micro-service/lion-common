@@ -33,7 +33,7 @@ public class LocalFileUploadServiceImpl implements FileUploadService {
         File entity = new File();
         entity.setSize(file.getSize());
         entity.setOriginalFileName(file.getOriginalFilename());
-        entity.setUrl(fileName);
+        entity.setUrl("/"+ fileName);
         return entity;
     }
 }

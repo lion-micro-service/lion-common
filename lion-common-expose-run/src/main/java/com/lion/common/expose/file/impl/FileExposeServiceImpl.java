@@ -2,6 +2,7 @@ package com.lion.common.expose.file.impl;
 
 import com.lion.common.entity.file.File;
 import com.lion.common.expose.file.FileExposeService;
+import com.lion.common.service.file.FileUploadService;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.Objects;
@@ -23,6 +24,11 @@ public class FileExposeServiceImpl extends com.lion.core.service.impl.BaseServic
         if (Objects.isNull(file)){
             return "";
         }
-        return file.getUrl();
+        String url = file.getUrl();
+        if (!Objects.equals(url.substring(0,1),"/")) {
+            url = "/"+url;
+        }
+        url = FileUploadService.URL_PREFIX+url;
+        return url;
     }
 }

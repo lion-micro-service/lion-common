@@ -49,6 +49,12 @@ public abstract class AbstractFileController {
             if (Objects.nonNull(entity)) {
                 fileService.save(entity);
                 if (Objects.nonNull(entity.getId())) {
+                    String url = entity.getUrl();
+                    if (!Objects.equals(url.substring(0,1),"/")) {
+                        url = "/"+url;
+                    }
+                    url = FileUploadService.URL_PREFIX+url;
+                    entity.setUrl(url);
                     fileList.add(entity);
                 }
             }
