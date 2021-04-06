@@ -31,7 +31,7 @@ public class EnumUtil extends BaseEntity {
     private String classs;
 
     @ApiModelProperty(value = "枚举value值")
-    @Column(name = "value",nullable = false,length = 1000)
+    @Column(name = "value",nullable = false,length = 2000)
     private String value;
 
 }
