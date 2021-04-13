@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2020-10-07 14:34
  **/
 @RestController
-@RequestMapping("/captcha/front")
+@RequestMapping("/captcha/frontend")
 public class CaptchaController extends AbstractCaptchaController {
 }

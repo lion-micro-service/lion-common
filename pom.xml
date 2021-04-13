@@ -25,7 +25,7 @@
 		<module>lion-common-expose-run</module>
 		<module>lion-common-app-restful</module>
 		<module>lion-common-console-restful</module>
-		<module>lion-common-front-restful</module>
+		<module>lion-common-frontend-restful</module>
 		<module>lion-common-wechat-restful</module>
     </modules>
 	<dependencyManagement>

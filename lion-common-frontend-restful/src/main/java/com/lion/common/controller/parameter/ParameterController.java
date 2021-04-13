@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/9/15上午11:06
  */
 @RestController
-@RequestMapping("/parameter/front")
+@RequestMapping("/parameter/frontend")
 @Validated
 public class ParameterController extends BaseControllerImpl implements BaseController {
 }
