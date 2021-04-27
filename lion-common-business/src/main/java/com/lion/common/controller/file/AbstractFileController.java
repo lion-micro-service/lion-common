@@ -2,17 +2,25 @@ package com.lion.common.controller.file;
 
 import com.lion.annotation.AuthorizationIgnore;
 import com.lion.common.entity.file.File;
+import com.lion.common.service.file.FileDownloadService;
 import com.lion.common.service.file.FileService;
 import com.lion.common.service.file.FileUploadService;
 import com.lion.core.IResultData;
 import com.lion.core.ResultData;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.constraints.NotNull;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +38,9 @@ public abstract class AbstractFileController {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private FileDownloadService fileDownloadService;
 
     @PostMapping("/upload")
     @AuthorizationIgnore
@@ -60,5 +71,27 @@ public abstract class AbstractFileController {
             }
         }
         return ResultData.instance().setData(fileList);
+    }
+
+    @GetMapping("/download")
+    @AuthorizationIgnore
+    @ApiOperation(value = "文件下载",notes = "文件下载")
+    public ResponseEntity<InputStreamResource> download(@NotNull(message = "文件id不能为空") Long id){
+        File file = fileService.findById(id);
+        InputStream inputStream = fileDownloadService.downlod(file);
+        if (Objects.nonNull(inputStream)){
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"",file.getOriginalFileName()));
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentLength(file.getSize())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(new InputStreamResource(inputStream));
+        }
+        return null;
     }
 }

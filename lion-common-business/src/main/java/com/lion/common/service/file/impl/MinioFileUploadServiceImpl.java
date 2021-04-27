@@ -43,15 +43,16 @@ public class MinioFileUploadServiceImpl implements FileUploadService {
     public File upload(MultipartFile file) throws Exception{
         String fileStoreName = UUID.randomUUID().toString()+file.getOriginalFilename();
         InputStream inputStream = file.getInputStream();
-        PutObjectArgs putObjectArgs = PutObjectArgs.builder().bucket(MinioProperties.PUBLIC_BUCKET).object(minioProperties.getBucket()+"/"+fileStoreName).stream(
+        PutObjectArgs putObjectArgs = PutObjectArgs.builder().bucket(MinioProperties.PUBLIC_BUCKET).object(minioProperties.getPath()+"/"+fileStoreName).stream(
                 inputStream, inputStream.available(), -1)
                 .build();
         ObjectWriteResponse objectWriteResponse = minioClient.putObject(putObjectArgs);
         if (Objects.nonNull(objectWriteResponse) && StringUtils.hasText(objectWriteResponse.etag())) {
             File entity = new File();
             entity.setSize(file.getSize());
+            entity.setFileName(fileStoreName);
             entity.setOriginalFileName(file.getOriginalFilename());
-            entity.setUrl("/" + MinioProperties.PUBLIC_BUCKET + "/" + minioProperties.getBucket() + "/" + fileStoreName);
+            entity.setUrl("/" + MinioProperties.PUBLIC_BUCKET + "/" + minioProperties.getPath() + "/" + fileStoreName);
             return entity;
         }
         return null;

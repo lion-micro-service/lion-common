@@ -33,6 +33,10 @@ public class File extends BaseEntity {
     @Column(name = "original_file_name", nullable = false)
     private String originalFileName;
 
+    @ApiModelProperty(value = "文件名")
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+
     @ApiModelProperty(value = "文件大小")
     @Column(name = "size", nullable = false)
     private Long size;
