@@ -39,4 +39,11 @@ public class EnumToSelectController extends AbstractEnumToSelectController {
             enumUtilService.save(enumUtil);
         });
     }
+
+    @GetMapping("/list")
+    @AuthorizationIgnore
+    @ApiOperation(value = "获取所有字典定义")
+    public IResultData<List<EnumUtil>> list(){
+        return ResultData.instance().setData(enumUtilService.findAll());
+    }
 }

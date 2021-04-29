@@ -28,7 +28,9 @@ public class FileExposeServiceImpl extends com.lion.core.service.impl.BaseServic
         if (!Objects.equals(url.substring(0,1),"/")) {
             url = "/"+url;
         }
-        url = FileUploadService.URL_PREFIX+url;
+        if (url.indexOf("/file")<0){
+            url = FileUploadService.URL_PREFIX+url;
+        }
         return url;
     }
 }

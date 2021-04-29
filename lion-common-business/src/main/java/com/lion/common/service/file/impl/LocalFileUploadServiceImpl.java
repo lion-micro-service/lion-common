@@ -32,6 +32,7 @@ public class LocalFileUploadServiceImpl implements FileUploadService {
         FileUtils.copyInputStreamToFile(file.getInputStream(), new java.io.File(filePath));
         File entity = new File();
         entity.setSize(file.getSize());
+        entity.setFileName(fileName);
         entity.setOriginalFileName(file.getOriginalFilename());
         entity.setUrl("/"+ fileName);
         return entity;

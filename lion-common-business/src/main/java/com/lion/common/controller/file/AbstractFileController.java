@@ -64,7 +64,9 @@ public abstract class AbstractFileController {
                     if (!Objects.equals(url.substring(0,1),"/")) {
                         url = "/"+url;
                     }
-                    url = FileUploadService.URL_PREFIX+url;
+                    if (url.indexOf("/file")<0){
+                        url = FileUploadService.URL_PREFIX+url;
+                    }
                     entity.setUrl(url);
                     fileList.add(entity);
                 }
