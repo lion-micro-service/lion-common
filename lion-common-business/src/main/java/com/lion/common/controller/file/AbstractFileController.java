@@ -33,13 +33,13 @@ import java.util.Objects;
  **/
 public abstract class AbstractFileController {
 
-    @Autowired
+    @Autowired(required = false)
     private FileUploadService fileUploadService;
 
     @Autowired
     private FileService fileService;
 
-    @Autowired
+    @Autowired(required = false)
     private FileDownloadService fileDownloadService;
 
     @PostMapping("/upload")
