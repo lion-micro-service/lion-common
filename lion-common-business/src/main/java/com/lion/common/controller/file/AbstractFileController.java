@@ -7,12 +7,14 @@ import com.lion.common.service.file.FileService;
 import com.lion.common.service.file.FileUploadService;
 import com.lion.core.IResultData;
 import com.lion.core.ResultData;
+import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -91,9 +93,32 @@ public abstract class AbstractFileController {
                     .ok()
                     .headers(headers)
                     .contentLength(file.getSize())
-                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .contentType(getMediaType(file.getOriginalFileName()))
                     .body(new InputStreamResource(inputStream));
         }
         return null;
+    }
+
+    private MediaType getMediaType(String originalFileName) {
+        if (originalFileName.lastIndexOf(".")==-1 || !StringUtils.hasText(originalFileName)) {
+            return MediaType.parseMediaType("application/octet-stream");
+        }
+        String suffix = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+        if (Objects.equals(suffix.toLowerCase(),"001")) {
+            return MediaType.parseMediaType("application/x-001");
+        }else if (Objects.equals(suffix.toLowerCase(),"323")) {
+            return MediaType.parseMediaType("text/h323");
+        }else if (Objects.equals(suffix.toLowerCase(),"907")) {
+            return MediaType.parseMediaType("drawing/907");
+        }else if (Objects.equals(suffix.toLowerCase(),"acp")) {
+            return MediaType.parseMediaType("audio/x-mei-aac");
+        }else if (Objects.equals(suffix.toLowerCase(),"jpe") || Objects.equals(suffix.toLowerCase(),"jpeg")) {
+            return MediaType.parseMediaType("image/jpeg");
+        }else if (Objects.equals(suffix.toLowerCase(),"jpg")) {
+            return MediaType.parseMediaType("application/x-jpg");
+        }else if (Objects.equals(suffix.toLowerCase(),"png")) {
+            return MediaType.parseMediaType("application/x-png");
+        }
+        return MediaType.parseMediaType("application/octet-stream");
     }
 }
