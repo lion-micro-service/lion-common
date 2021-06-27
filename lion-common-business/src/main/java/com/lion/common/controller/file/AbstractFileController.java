@@ -86,8 +86,9 @@ public abstract class AbstractFileController {
         if (Objects.nonNull(inputStream)){
             HttpHeaders headers = new HttpHeaders();
             headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"",file.getOriginalFileName()));
+            headers.add("Content-Disposition", String.format("inline; filename=\"%s\"",file.getOriginalFileName()));
             headers.add("Pragma", "no-cache");
+            headers.add("Content-length", String.valueOf(file.getSize()));
             headers.add("Expires", "0");
             return ResponseEntity
                     .ok()
