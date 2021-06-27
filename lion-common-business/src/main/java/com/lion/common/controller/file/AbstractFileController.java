@@ -113,12 +113,8 @@ public abstract class AbstractFileController {
             return MediaType.parseMediaType("drawing/907");
         }else if (Objects.equals(suffix.toLowerCase(),"acp")) {
             return MediaType.parseMediaType("audio/x-mei-aac");
-        }else if (Objects.equals(suffix.toLowerCase(),"jpe") || Objects.equals(suffix.toLowerCase(),"jpeg")) {
+        }else if (Objects.equals(suffix.toLowerCase(),"jpe") || Objects.equals(suffix.toLowerCase(),"jpeg") || Objects.equals(suffix.toLowerCase(),"jpg") ||Objects.equals(suffix.toLowerCase(),"png")) {
             return MediaType.parseMediaType("image/jpeg");
-        }else if (Objects.equals(suffix.toLowerCase(),"jpg")) {
-            return MediaType.parseMediaType("application/x-jpg");
-        }else if (Objects.equals(suffix.toLowerCase(),"png")) {
-            return MediaType.parseMediaType("application/x-png");
         }
         return MediaType.parseMediaType("application/octet-stream");
     }
