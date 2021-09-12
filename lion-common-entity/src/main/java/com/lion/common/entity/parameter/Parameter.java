@@ -23,7 +23,7 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "t_parameter",indexes = {@Index(columnList = "create_date_time") })
-@DynamicUpdate
+
 @DynamicInsert
 @Data
 @ApiModel(description = "系统参数")

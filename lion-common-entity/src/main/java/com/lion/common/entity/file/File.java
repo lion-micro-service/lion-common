@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "t_file")
-@DynamicUpdate
+
 @DynamicInsert
 @Data
 @ApiModel(description = "文件")

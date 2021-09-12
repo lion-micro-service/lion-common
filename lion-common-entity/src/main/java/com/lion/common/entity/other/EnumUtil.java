@@ -19,7 +19,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "t_enum_util")
-@DynamicUpdate
+
 @DynamicInsert
 @Data
 @ApiModel(description = "保存所有微服务的枚举值，用于前端生成select下拉框")
