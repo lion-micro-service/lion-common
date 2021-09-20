@@ -15,7 +15,7 @@ import java.util.UUID;
  * @date 2020/9/15上午10:29
  */
 @DubboService(interfaceClass = ParameterExposeService.class)
-public class ParameterExposeServiceImpl extends com.lion.core.service.impl.BaseServiceImpl<Parameter> implements ParameterExposeService, com.lion.core.service.BaseService<Parameter> {
+public class ParameterExposeServiceImpl extends com.lion.core.service.impl.BaseServiceImpl<Parameter> implements ParameterExposeService {
 
     @Autowired
     private ParameterDao parameterDao;

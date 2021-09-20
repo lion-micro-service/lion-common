@@ -4,6 +4,7 @@ import com.lion.aop.exception.RestulException;
 import com.lion.config.EntityAuditorConfiguration;
 import com.lion.core.persistence.BaseDaoFactoryBean;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

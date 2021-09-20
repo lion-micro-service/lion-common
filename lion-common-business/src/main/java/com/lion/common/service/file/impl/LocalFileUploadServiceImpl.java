@@ -1,9 +1,7 @@
 package com.lion.common.service.file.impl;
 
-import com.alibaba.druid.sql.visitor.functions.If;
 import com.lion.common.entity.file.File;
 import com.lion.common.service.file.FileUploadService;
-import com.lion.config.properties.MinioProperties;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
