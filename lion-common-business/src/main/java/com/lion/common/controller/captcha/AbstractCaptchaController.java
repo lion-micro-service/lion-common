@@ -4,8 +4,8 @@ import com.lion.annotation.AuthorizationIgnore;
 import com.lion.core.IResultData;
 import com.lion.core.ResultData;
 import com.wf.captcha.SpecCaptcha;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +47,13 @@ public abstract class AbstractCaptchaController {
         return resultData;
     }
 }
-@ApiModel
+@Schema
 @Data
 class Captcha{
 
-    @ApiModelProperty("")
+    @Schema()
     private String key;
 
-    @ApiModelProperty("验证码图片base64编码")
+    @Schema(description = "验证码图片base64编码")
     private String image;
 }
