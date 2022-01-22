@@ -17,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author mr.liu
@@ -32,11 +33,12 @@ public abstract class AbstractEnumToSelectController {
     @AuthorizationIgnore
     @ApiOperation(value = "枚举转selelct下拉框", notes = "枚举转selelct下拉框")
     public IResultData<List<Map<String,String>>> enumToSelect(@NotBlank(message = "请输入enumClass") String enumClass) throws JsonProcessingException {
-        EnumUtil enumUtil = enumUtilService.find(enumClass);
-        if (Objects.nonNull(enumUtil)) {
-            LionObjectMapper objectMapper = new LionObjectMapper();
-            return ResultData.instance().setData(objectMapper.readValue(enumUtil.getValue(), List.class));
+        Optional<EnumUtil> optional = enumUtilService.find(enumClass);
+        if (!optional.isPresent()) {
+            return ResultData.instance();
         }
-        return ResultData.instance();
+        EnumUtil enumUtil = optional.get();
+        LionObjectMapper objectMapper = new LionObjectMapper();
+        return ResultData.instance().setData(objectMapper.readValue(enumUtil.getValue(), List.class));
     }
 }

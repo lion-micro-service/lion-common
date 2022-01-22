@@ -3,6 +3,8 @@ package com.lion.common.dao.parameter;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.core.persistence.curd.BaseDao;
 
+import java.util.Optional;
+
 /**
  * @author mr.liu
  * @Description: Parameter Dao
@@ -15,5 +17,5 @@ public interface ParameterDao extends BaseDao<Parameter>, ParameterDaoEx {
      * @param code
      * @return
      */
-    public Parameter findFirstByCode(String code);
+    public Optional<Parameter> findFirstByCode(String code);
 }

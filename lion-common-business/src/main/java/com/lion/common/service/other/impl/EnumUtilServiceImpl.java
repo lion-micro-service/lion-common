@@ -7,7 +7,7 @@ import com.lion.core.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author mr.liu
@@ -27,7 +27,7 @@ public class EnumUtilServiceImpl extends BaseServiceImpl<EnumUtil> implements En
     }
 
     @Override
-    public EnumUtil find(String classs) {
+    public Optional<EnumUtil> find(String classs) {
         return enumUtilDao.findFirstByClasss(classs);
     }
 }

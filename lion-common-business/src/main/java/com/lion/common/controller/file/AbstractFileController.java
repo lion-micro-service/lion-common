@@ -23,10 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @description: 文件控制层，只处理上传文件
@@ -81,7 +78,11 @@ public abstract class AbstractFileController {
     @AuthorizationIgnore
     @ApiOperation(value = "文件下载",notes = "文件下载")
     public ResponseEntity<InputStreamResource> download(@NotNull(message = "文件id不能为空") Long id){
-        File file = fileService.findById(id);
+        Optional<File> optional = fileService.findById(id);
+        if (!optional.isPresent()) {
+            return null;
+        }
+        File file = optional.get();
         InputStream inputStream = fileDownloadService.downlod(file);
         if (Objects.nonNull(inputStream)){
             HttpHeaders headers = new HttpHeaders();

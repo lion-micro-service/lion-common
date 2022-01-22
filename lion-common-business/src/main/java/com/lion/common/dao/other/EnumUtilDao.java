@@ -5,6 +5,8 @@ import com.lion.core.persistence.curd.BaseDao;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * @author mr.liu
  * @Description:
@@ -17,7 +19,7 @@ public interface EnumUtilDao extends BaseDao<EnumUtil> {
      * @param classs
      * @return
      */
-    public EnumUtil findFirstByClasss(String classs);
+    public Optional<EnumUtil> findFirstByClasss(String classs);
 
     /**
      * 根据class删除枚举

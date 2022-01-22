@@ -7,9 +7,9 @@ import com.lion.core.service.impl.BaseServiceImpl;
 import com.lion.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author mr.liu
@@ -23,17 +23,17 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
     private ParameterDao parameterDao;
 
     @Override
-    public Parameter findParameter(String code) {
+    public Optional<Parameter> findParameter(String code) {
         return parameterDao.findFirstByCode(code);
     }
 
     @Override
     public Boolean checkCodeExist(String code, Long id) {
-        Parameter parameter = parameterDao.findFirstByCode(code);
-        if (Objects.isNull(parameter)){
+        Optional<Parameter> optional = parameterDao.findFirstByCode(code);
+        if (!optional.isPresent()){
             return false;
         }
-        if (Objects.nonNull(id) && parameter.getId().equals(id)){
+        if (Objects.nonNull(id) && optional.get().getId().equals(id)){
             return false;
         }
         return true;

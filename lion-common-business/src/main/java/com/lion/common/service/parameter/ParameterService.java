@@ -3,6 +3,8 @@ package com.lion.common.service.parameter;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.core.service.BaseService;
 
+import java.util.Optional;
+
 /**
  * @author mr.liu
  * @Description: parameter service
@@ -15,7 +17,7 @@ public interface ParameterService extends BaseService<Parameter> {
      * @param code
      * @return
      */
-    public Parameter findParameter(String code);
+    public Optional<Parameter> findParameter(String code);
 
     /**
      * 检查编码是否存在

@@ -1,5 +1,6 @@
 package com.lion.common.controller.parameter;
 
+import com.lion.common.entity.file.File;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.service.parameter.ParameterService;
 import com.lion.constant.SearchConstant;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author mr.liu
@@ -77,7 +79,12 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
     @ApiOperation(value = "获取详情",notes = "获取详情")
     @GetMapping("/details")
     public IResultData<Boolean> details(@NotNull(message = "id不能为空")Long id){
-        return ResultData.instance().setData(parameterService.findById(id));
+        Optional<Parameter> optional = parameterService.findById(id);
+        if (!optional.isPresent()) {
+            return null;
+        }
+        Parameter parameter = optional.get();
+        return ResultData.instance().setData(parameter);
     }
 
     @ApiOperation(value = "删除参数设置",notes = "删除参数设置")

@@ -7,6 +7,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -22,12 +23,14 @@ public class ParameterExposeServiceImpl extends com.lion.core.service.impl.BaseS
 
     @Override
     public void testSeataTransactional(String code, String value) {
-        Parameter parameter = parameterDao.findFirstByCode(code);
-        if (Objects.isNull(parameter)){
+        Optional<Parameter> optional = parameterDao.findFirstByCode(code);
+        Parameter parameter = null;
+        if (!optional.isPresent()){
             parameter = new Parameter();
             parameter.setCode(code);
             parameter.setValue(value);
         }else {
+            parameter = optional.get();
             parameter.setValue(UUID.randomUUID().toString());
         }
         this.save(parameter);

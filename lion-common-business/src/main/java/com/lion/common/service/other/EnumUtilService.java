@@ -3,6 +3,8 @@ package com.lion.common.service.other;
 import com.lion.common.entity.other.EnumUtil;
 import com.lion.core.service.BaseService;
 
+import java.util.Optional;
+
 /**
  * @author mr.liu
  * @Description:
@@ -15,5 +17,5 @@ public interface EnumUtilService extends BaseService<EnumUtil> {
      * @param classs
      * @return
      */
-    public EnumUtil find(String classs);
+    public Optional<EnumUtil> find(String classs);
 }

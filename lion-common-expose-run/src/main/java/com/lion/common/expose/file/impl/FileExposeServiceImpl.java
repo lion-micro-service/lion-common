@@ -1,12 +1,14 @@
 package com.lion.common.expose.file.impl;
 
 import com.lion.common.entity.file.File;
+import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.expose.file.FileExposeService;
 import com.lion.common.service.file.FileUploadService;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import javax.annotation.PostConstruct;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @description:
@@ -21,7 +23,11 @@ public class FileExposeServiceImpl extends com.lion.core.service.impl.BaseServic
         if (Objects.isNull(id)){
             return "";
         }
-        File file = this.findById(id);
+        Optional<File> optional = this.findById(id);
+        if (!optional.isPresent()) {
+            return "";
+        }
+        File file = optional.get();
         if (Objects.isNull(file)){
             return "";
         }
