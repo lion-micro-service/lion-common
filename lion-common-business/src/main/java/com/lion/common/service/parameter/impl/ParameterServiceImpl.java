@@ -23,7 +23,7 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
     private ParameterDao parameterDao;
 
     @Override
-    public Optional<Parameter> findParameter(String code) {
+    public java.util.Optional<Parameter> findParameter(String code) {
         return parameterDao.findFirstByCode(code);
     }
 
