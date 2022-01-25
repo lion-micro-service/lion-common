@@ -1,41 +1,41 @@
 <template>
-    <a-modal destroyOnClose v-model="addOrUpdateModal" width="800px" title="添加/修改参数" centered @ok="addOrUpdate" :maskClosable="maskClosable" cancelText="关闭" okText="保存">
-        <a-form-model layout="inline" ref="addOrUpdateForm" :model="addOrUpdateModel" :rules="rules" >
+    <a-modal v-model:visible="addOrUpdateModal" width="800px" title="添加/修改参数" @cancel="cancel" centered @ok="addOrUpdate" :maskClosable="maskClosable" cancelText="关闭" okText="保存">
+        <a-form  ref="addOrUpdateForm" :model="addOrUpdateModel" :rules="rules" >
             <a-row>
                 <a-col :span="12">
-                    <a-form-model-item label="名称" prop="name" ref="name">
-                        <a-input placeholder="请输入名称" v-model="addOrUpdateModel.name" />
-                    </a-form-model-item>
+                    <a-form-item label="名称" name="name" ref="name">
+                        <a-input placeholder="请输入名称" v-model:value="addOrUpdateModel.name" />
+                    </a-form-item>
                 </a-col>
                 <a-col :span="12">
-                    <a-form-model-item label="编码" prop="code" ref="code">
-                        <a-input placeholder="请输入编码" v-model="addOrUpdateModel.code" />
-                    </a-form-model-item>
+                    <a-form-item label="编码" name="code" ref="code">
+                        <a-input placeholder="请输入编码" v-model:value="addOrUpdateModel.code" />
+                    </a-form-item>
                 </a-col>
             </a-row>
             <a-row>
                 <a-col :span="24">
-                    <a-form-model-item label="值" prop="value" ref="value">
-                        <a-input placeholder="请输入值" v-model="addOrUpdateModel.value" />
-                    </a-form-model-item>
+                    <a-form-item label="值" name="value" ref="value">
+                        <a-input placeholder="请输入值" v-model:value="addOrUpdateModel.value" />
+                    </a-form-item>
                 </a-col>
             </a-row>
             <a-row>
                 <a-col id="remark" :span="24">
-                    <a-form-model-item label="备注" prop="remark" ref="remark">
-                        <a-textarea  placeholder="请输入备注" :rows="4" v-model="addOrUpdateModel.remark"/>
-                    </a-form-model-item>
+                    <a-form-item label="备注" name="remark" ref="remark">
+                        <a-textarea  placeholder="请输入备注" :rows="4" v-model:value="addOrUpdateModel.remark"/>
+                    </a-form-item>
                 </a-col>
             </a-row>
-        </a-form-model>
+        </a-form>
     </a-modal>
 </template>
 
 <script lang="ts">
-    import {Component,  Vue} from 'vue-property-decorator';
+    import {Options,  Vue} from 'vue-property-decorator';
     import axios from "@lion/lion-frontend-core/src/network/axios";
     import { message } from 'ant-design-vue';
-    @Component({})
+    @Options({components:{}})
     export default class addOrUpdate extends Vue{
         //点击阴影层是否关闭窗口
         private maskClosable:boolean=false;
@@ -45,7 +45,7 @@
         private addOrUpdateModel:any={}
         //校验规则
         private rules:any={
-            code:[{required:true,validator:this.checkCodeIsExist,trigger:'blur'}]
+            code:[{required:true,validator: (rule,value)=>{return this.checkCodeIsExist(rule,value,this)},trigger:'blur'}]
         };
 
         /**
@@ -54,61 +54,57 @@
          * @param value
          * @param callback
          */
-        private checkCodeIsExist(rule :any, value:string, callback:any):void{
-            if (!value || value.trim() === ''){
-                callback(new Error('请输入编码'));
-                return;
-            }else if (value && value.trim() !== ''){
-                axios.get("/lion-common-console-restful/parameter/console/check/code/exist",{params:{"code":this.addOrUpdateModel.code,"id":this.addOrUpdateModel.id}})
-                    .then((data)=> {
-                        if (Object(data).status !== 200){
-                            callback(new Error('异常错误！请检查'));
-                            return;
-                        }
-                        if (data.data) {
-                            callback(new Error('编码已存在'));
-                        }else {
-                            callback();
-                        }
-                    })
-                    .catch(fail => {
-                    })
-                    .finally(()=>{
-                    });
-                return;
-            }
-            callback();
+        private async checkCodeIsExist(rule :any, value:string, _this:any){
+          let promise:any = null;
+          if (!value || value.trim() === ''){
+            promise = Promise.reject('请输入编码');
+          }else if (value && value.trim() !== ''){
+            await axios.get("/lion-common-console-restful/parameter/console/check/code/exist",{params:{"code":_this.addOrUpdateModel.code,"id":_this.addOrUpdateModel.id}})
+              .then((data)=> {
+                  if (Object(data).status !== 200){
+                    promise= Promise.reject("异常错误！请检查")
+                  }
+                  if (data.data) {
+                    promise= Promise.reject("编码已存在")
+                  }else {
+                    promise = Promise.resolve();
+                  }
+              })
+              .catch(fail => {
+              })
+              .finally(()=>{
+              });
+          }
+          return promise;
         }
 
         /**
          * 提交数据
          */
         private addOrUpdate():void{
-            (this.$refs.addOrUpdateForm as any).validate((validate: boolean) => {
-                if (validate) {
-                    if (this.addOrUpdateModel.id){
-                        axios.put("/lion-common-console-restful/parameter/console/update",this.addOrUpdateModel)
-                            .then((data) =>{
-                                if (Object(data).status === 200){
-                                    message.success(Object(data).message);
-                                    this.success();
-                                }
-                            }).catch((fail)=>{
-                        }).finally(()=>{
-                        })
-                    }else {
-                        axios.post("/lion-common-console-restful/parameter/console/add",this.addOrUpdateModel)
-                            .then((data) =>{
-                                if (Object(data).status === 200){
-                                    message.success(Object(data).message);
-                                    this.success();
-                                }
-                            }).catch((fail)=>{
-                        }).finally(()=>{
-                        })
+          (this.$refs.addOrUpdateForm as any).validate().then(()=>{
+            if (this.addOrUpdateModel.id){
+              axios.put("/lion-common-console-restful/parameter/console/update",this.addOrUpdateModel)
+                  .then((data) =>{
+                    if (Object(data).status === 200){
+                      message.success(Object(data).message);
+                      this.success();
                     }
-                }
-            });
+                  }).catch((fail)=>{
+              }).finally(()=>{
+              })
+            }else {
+              axios.post("/lion-common-console-restful/parameter/console/add",this.addOrUpdateModel)
+                  .then((data) =>{
+                    if (Object(data).status === 200){
+                      message.success(Object(data).message);
+                      this.success();
+                    }
+                  }).catch((fail)=>{
+              }).finally(()=>{
+              })
+            }
+          }).catch(fail=>{}).finally(()=>{})
         }
 
         /**
@@ -138,6 +134,15 @@
             this.addOrUpdateModel={};
             (this.$parent as any).search();
         }
+
+      /**
+       * 关闭弹窗时清空数据，以免数据污染
+       * @private
+       */
+      private cancel():void {
+        (this.$refs.addOrUpdateForm as any).clearValidate();
+        (this.$refs.addOrUpdateForm as any).resetFields();
+      }
 
     }
 </script>
