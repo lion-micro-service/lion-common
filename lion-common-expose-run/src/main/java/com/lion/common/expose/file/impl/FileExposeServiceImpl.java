@@ -28,9 +28,6 @@ public class FileExposeServiceImpl extends com.lion.core.service.impl.BaseServic
             return "";
         }
         File file = optional.get();
-        if (Objects.isNull(file)){
-            return "";
-        }
         String url = file.getUrl();
         if (!Objects.equals(url.substring(0,1),"/")) {
             url = "/"+url;
