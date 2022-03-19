@@ -26,5 +26,9 @@
 			<groupId>com.lion</groupId>
 			<artifactId>lion-expose-starter</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+        </dependency>
     </dependencies>
 </project>
