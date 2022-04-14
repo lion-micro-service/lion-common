@@ -40,6 +40,3 @@ spring:
           - data-id: lion-redis-common.${spring.cloud.nacos.config.file-extension}
             refresh: true
             group: GLOBAL_GROUP
-dubbo:
-  registry:
-    meta-data:
