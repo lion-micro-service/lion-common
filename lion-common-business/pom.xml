@@ -19,7 +19,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.lion</groupId>
-			<artifactId>lion-common-entity</artifactId>
+			<artifactId>lion-common-common</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lion</groupId>
+			<artifactId>lion-common-interface-expose</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>

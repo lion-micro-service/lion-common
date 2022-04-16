@@ -21,17 +21,11 @@
 		<starter.version>1.1.0-SNAPSHOT</starter.version>
 	</properties>
 
-
-
 	<modules>
-		<module>lion-common-entity</module>
 		<module>lion-common-business</module>
-		<module>lion-common-expose</module>
-		<module>lion-common-expose-run</module>
-		<module>lion-common-app-restful</module>
-		<module>lion-common-console-restful</module>
-		<module>lion-common-frontend-restful</module>
-		<module>lion-common-wechat-restful</module>
+		<module>lion-common-common</module>
+		<module>lion-common-interface-expose</module>
+		<module>lion-common-serve</module>
     </modules>
 	<dependencyManagement>
 		<dependencies>
@@ -42,17 +36,17 @@
 			</dependency>
 			<dependency>
 				<groupId>com.lion</groupId>
-				<artifactId>lion-expose-run-starter</artifactId>
+				<artifactId>lion-expose-impl-starter</artifactId>
 				<version>${starter.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.lion</groupId>
-				<artifactId>lion-expose-starter</artifactId>
+				<artifactId>lion-interface-expose-starter</artifactId>
 				<version>${starter.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.lion</groupId>
-				<artifactId>lion-restful-starter</artifactId>
+				<artifactId>lion-serve-starter</artifactId>
 				<version>${starter.version}</version>
 			</dependency>
 		</dependencies>

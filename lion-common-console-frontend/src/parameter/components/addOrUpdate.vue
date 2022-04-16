@@ -59,7 +59,7 @@
           if (!value || value.trim() === ''){
             promise = Promise.reject('请输入编码');
           }else if (value && value.trim() !== ''){
-            await axios.get("/lion-common-console-restful/parameter/console/check/code/exist",{params:{"code":_this.addOrUpdateModel.code,"id":_this.addOrUpdateModel.id}})
+            await axios.get("/lion-common-serve/parameter/check/code/exist",{params:{"code":_this.addOrUpdateModel.code,"id":_this.addOrUpdateModel.id}})
               .then((data)=> {
                   if (Object(data).status !== 200){
                     promise= Promise.reject("异常错误！请检查")
@@ -84,7 +84,7 @@
         private addOrUpdate():void{
           (this.$refs.addOrUpdateForm as any).validate().then(()=>{
             if (this.addOrUpdateModel.id){
-              axios.put("/lion-common-console-restful/parameter/console/update",this.addOrUpdateModel)
+              axios.put("/lion-common-serve/parameter/update",this.addOrUpdateModel)
                   .then((data) =>{
                     if (Object(data).status === 200){
                       message.success(Object(data).message);
@@ -94,7 +94,7 @@
               }).finally(()=>{
               })
             }else {
-              axios.post("/lion-common-console-restful/parameter/console/add",this.addOrUpdateModel)
+              axios.post("/lion-common-serve/parameter/add",this.addOrUpdateModel)
                   .then((data) =>{
                     if (Object(data).status === 200){
                       message.success(Object(data).message);
@@ -112,7 +112,7 @@
          * @param id
          */
         private getDetails(id:string):void{
-            axios.get("/lion-common-console-restful/parameter/console/details",{params:{"id":id}})
+            axios.get("/lion-common-serve/parameter/details",{params:{"id":id}})
                 .then((data)=>{
                     if (Object(data).status === 200){
                         let parameter = data.data;
