@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {"com.lion.common.dao.**"}, repositoryFactoryBeanClass = BaseDaoFactoryBean.class)
 @EntityScan({"com.lion.common.entity.**"})
 @EnableJpaAuditing
-public class ApplicationCommonConsoleRestful {
+public class ApplicationCommonServe {
 
     public static void main ( String args[] ) throws Exception {
 
@@ -27,6 +27,6 @@ public class ApplicationCommonConsoleRestful {
          * new SpringApplicationBuilder(Application.class)
          * .web(WebApplicationType.NONE) .run(args);
          */
-        SpringApplication.run(ApplicationCommonConsoleRestful.class, args);
+        SpringApplication.run(ApplicationCommonServe.class, args);
     }
 }
