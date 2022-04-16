@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * @create: 2020-10-07 14:34
  **/
 @RestController
-@RequestMapping("/captcha/console")
+@RequestMapping("/captcha")
 @Api(tags = {"验证码"})
 public class CaptchaController extends BaseControllerImpl implements BaseController {
 
