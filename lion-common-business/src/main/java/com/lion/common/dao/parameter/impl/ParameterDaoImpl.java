@@ -5,6 +5,7 @@ import com.lion.common.entity.parameter.Parameter;
 import com.lion.core.persistence.curd.BaseDao;
 import org.hibernate.jdbc.ReturningWork;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
  */
 public class ParameterDaoImpl implements ParameterDaoEx {
 
+    @Lazy
     @Autowired
     private BaseDao<Parameter> baseDao;
 
