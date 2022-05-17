@@ -8,6 +8,7 @@ import com.lion.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -42,6 +43,11 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
     @Override
     public Boolean checkCodeExist(String code) {
         return checkCodeExist(code, null);
+    }
+
+    @Override
+    public List<Parameter> findByParentCode(String code) {
+        return parameterDao.findAllByParentCode(code);
     }
 
     @Override

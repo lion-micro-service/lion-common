@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
+
 import com.lion.core.Optional;
 
 /**
@@ -42,7 +44,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
     @ApiOperation(value = "列表",notes = "列表")
-    public IPageResultData<List<Parameter>> list(LionPage lionPage, String code, String name){
+    public IPageResultData<List<Parameter>> list(LionPage lionPage, String code, String name , Integer sort){
         JpqlParameter jpqlParameter = new JpqlParameter();
         if (StringUtils.hasText(code)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_code",code);
@@ -50,7 +52,11 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         if (StringUtils.hasText(name)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_name",name);
         }
-        jpqlParameter.setSortParameter("createDateTime", Sort.Direction.DESC);
+        if (Objects.nonNull(sort)){
+            jpqlParameter.setSortParameter("sort", Sort.Direction.DESC);
+        }else{
+            jpqlParameter.setSortParameter("createDateTime", Sort.Direction.DESC);
+        }
         lionPage.setJpqlParameter(jpqlParameter);
         return (PageResultData) this.parameterService.findNavigator(lionPage);
     }
@@ -93,6 +99,16 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
     @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
     public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id",required = false) @ApiParam(value = "数组(id=1&id=2)")  List<Long> id){
         id.forEach(i->{
+            Optional<Parameter> optional = parameterService.findById(i);
+            if (optional.isPresent()){
+                Parameter parameter = optional.get();
+                List<Parameter> childList = parameterService.findByParentCode(parameter.getCode());
+                if (Objects.nonNull(childList) && childList.size() > 0){
+                    childList.forEach(child ->{
+                        parameterService.delete(child);
+                    });
+                }
+            }
             parameterService.deleteById(i);
         });
         ResultData resultData = ResultData.instance();

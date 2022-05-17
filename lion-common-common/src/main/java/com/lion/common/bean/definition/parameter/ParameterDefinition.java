@@ -25,6 +25,12 @@ public class ParameterDefinition extends BaseEntity {
     @Schema(description = "值")
     private String value;
 
+    @Schema(description = "关联编码")
+    private String parentCode = "000";
+
+    @Schema(description = "sort")
+    private Integer sort;
+
     @Schema(description = "备注")
     private String remark;
 }
