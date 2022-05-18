@@ -42,7 +42,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
     private ParameterService parameterService;
 
     @GetMapping("/list")
-    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
     @ApiOperation(value = "列表",notes = "列表")
     public IPageResultData<List<Parameter>> list(LionPage lionPage, String code, String name , Integer sort){
         JpqlParameter jpqlParameter = new JpqlParameter();
@@ -52,11 +52,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         if (StringUtils.hasText(name)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_name",name);
         }
-        if (Objects.nonNull(sort)){
-            jpqlParameter.setSortParameter("sort", Sort.Direction.DESC);
-        }else{
-            jpqlParameter.setSortParameter("createDateTime", Sort.Direction.DESC);
-        }
+        jpqlParameter.setSortParameter("createDateTime", Sort.Direction.DESC);
         lionPage.setJpqlParameter(jpqlParameter);
         return (PageResultData) this.parameterService.findNavigator(lionPage);
     }
@@ -69,7 +65,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
 
     @ApiOperation(value = "新增参数设置",notes = "新增参数设置")
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_ADD')")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_ADD')")
     public IResultData add(@RequestBody @Validated({Validator.Insert.class}) CuParameterDto cuParameterDto){
         parameterService.save(ParameterMapper.INSTANCE.CuParameterDtoToParameter(cuParameterDto));
         return ResultData.instance();
@@ -96,21 +92,9 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
 
     @ApiOperation(value = "删除参数设置",notes = "删除参数设置")
     @DeleteMapping("/delete")
-    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
     public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id",required = false) @ApiParam(value = "数组(id=1&id=2)")  List<Long> id){
-        id.forEach(i->{
-            Optional<Parameter> optional = parameterService.findById(i);
-            if (optional.isPresent()){
-                Parameter parameter = optional.get();
-                List<Parameter> childList = parameterService.findByParentCode(parameter.getCode());
-                if (Objects.nonNull(childList) && childList.size() > 0){
-                    childList.forEach(child ->{
-                        parameterService.delete(child);
-                    });
-                }
-            }
-            parameterService.deleteById(i);
-        });
+        parameterService.deleteByIds(id);
         ResultData resultData = ResultData.instance();
         return resultData;
     }

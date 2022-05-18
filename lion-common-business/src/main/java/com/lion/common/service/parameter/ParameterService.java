@@ -1,6 +1,8 @@
 package com.lion.common.service.parameter;
 
 import com.lion.common.entity.parameter.Parameter;
+import com.lion.core.LionPage;
+import com.lion.core.PageResultData;
 import com.lion.core.service.BaseService;
 
 import java.util.List;
@@ -41,4 +43,10 @@ public interface ParameterService extends BaseService<Parameter> {
      * @return
      */
     public List<Parameter> findByParentCode(String code);
+
+    /**
+     * 根据id列表删除字典
+     * @param ids
+     */
+    public void deleteByIds(List<Long> ids);
 }

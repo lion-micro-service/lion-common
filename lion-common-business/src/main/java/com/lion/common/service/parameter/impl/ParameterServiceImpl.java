@@ -1,5 +1,6 @@
 package com.lion.common.service.parameter.impl;
 
+import com.alibaba.csp.sentinel.util.StringUtil;
 import com.lion.common.dao.parameter.ParameterDao;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.service.parameter.ParameterService;
@@ -8,6 +9,7 @@ import com.lion.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -48,6 +50,34 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
     @Override
     public List<Parameter> findByParentCode(String code) {
         return parameterDao.findAllByParentCode(code);
+    }
+
+    @Override
+    public void deleteByIds(List<Long> ids) {
+        ids.forEach(i->{
+            com.lion.core.Optional<Parameter> optional = findById(i);
+            if (optional.isPresent()){
+                Parameter parameter = optional.get();
+                List<Parameter> childList = findByParentCode(parameter.getCode());
+                if (Objects.nonNull(childList) && childList.size() > 0){
+                    childList.forEach(child ->{
+                        deleteByParentCode(child.getCode());
+                        delete(child);
+                    });
+                }
+            }
+            deleteById(i);
+        });
+    }
+
+    public void deleteByParentCode(String code) {
+            List<Parameter> parentCodeList = findByParentCode(code);
+            if (Objects.nonNull(parentCodeList) && parentCodeList.size()>0){
+                parentCodeList.forEach(parameter -> {
+                    deleteByParentCode(parameter.getCode());
+                    delete(parameter);
+                });
+            }
     }
 
     @Override
