@@ -21,5 +21,7 @@ public interface ParameterDao extends BaseDao<Parameter>, ParameterDaoEx {
      */
     public Optional<Parameter> findFirstByCode(String code);
 
-    public List<Parameter> findAllByParentCode(String parentCode);
+//    public List<Parameter> findAllByParentCode(String parentCode);
+
+    public List<Parameter> findAllByParentId(Long id);
 }

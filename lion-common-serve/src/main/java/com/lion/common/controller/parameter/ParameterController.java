@@ -4,6 +4,8 @@ import com.lion.common.dto.CuParameterDto;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.mapper.ParameterMapper;
 import com.lion.common.service.parameter.ParameterService;
+import com.lion.common.vo.ParameterListVo;
+import com.lion.common.vo.ParameterTreeVo;
 import com.lion.constant.SearchConstant;
 import com.lion.core.*;
 import com.lion.core.controller.BaseController;
@@ -14,8 +16,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +46,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
     @GetMapping("/list")
 //    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
     @ApiOperation(value = "列表",notes = "列表")
-    public IPageResultData<List<Parameter>> list(LionPage lionPage, String code, String name , Integer sort){
+    public IPageResultData<List<ParameterListVo>> list(LionPage lionPage, String code, String name , Integer sort){
         JpqlParameter jpqlParameter = new JpqlParameter();
         if (StringUtils.hasText(code)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_code",code);
@@ -52,9 +54,27 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         if (StringUtils.hasText(name)){
             jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_name",name);
         }
+        if (Objects.nonNull(sort)){
+            jpqlParameter.setSortParameter("sort", Sort.Direction.DESC);
+        }
         jpqlParameter.setSortParameter("createDateTime", Sort.Direction.DESC);
         lionPage.setJpqlParameter(jpqlParameter);
-        return (PageResultData) this.parameterService.findNavigator(lionPage);
+        Page<Parameter> navigator = parameterService.findNavigator(lionPage);
+        List<Parameter> content = navigator.getContent();
+        List<ParameterListVo> parameterListVos = ParameterMapper.INSTANCE.parameterToParameterListVo(content);
+        parameterListVos.forEach(parameterListVo -> {
+            Optional<Parameter> parentParameter = parameterService.findById(parameterListVo.getParentId());
+            if (parentParameter.isPresent()) parameterListVo.setParent(parentParameter.get());
+        });
+        return new PageResultData<>(parameterListVos,lionPage,navigator.getTotalElements());
+    }
+
+
+    @GetMapping("/list/tree")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
+    @ApiOperation(value = "树形列表",notes = "树形列表")
+    public IResultData<List<ParameterTreeVo>> listTree(){
+        return ResultData.instance().setData(parameterService.listTree(0L));
     }
 
     @GetMapping("/check/code/exist")
@@ -73,7 +93,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
 
     @PutMapping("/update")
     @ApiOperation(value = "修改参数设置",notes = "修改参数设置")
-    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_UPDATE')")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_UPDATE')")
     public IResultData update(@RequestBody @Validated({Validator.Update.class})CuParameterDto cuParameterDto){
         parameterService.update(ParameterMapper.INSTANCE.CuParameterDtoToParameter(cuParameterDto));
         return ResultData.instance();
@@ -90,7 +110,7 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         return ResultData.instance().setData(parameter);
     }
 
-    @ApiOperation(value = "删除参数设置",notes = "删除参数设置")
+    @ApiOperation(value = "删除参数设置(直接关联或者间接关联的都会删除)",notes = "删除参数设置(直接关联或者间接关联的都会删除)")
     @DeleteMapping("/delete")
 //    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
     public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id",required = false) @ApiParam(value = "数组(id=1&id=2)")  List<Long> id){

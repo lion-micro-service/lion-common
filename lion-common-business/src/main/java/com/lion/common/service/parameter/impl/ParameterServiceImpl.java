@@ -1,15 +1,16 @@
 package com.lion.common.service.parameter.impl;
 
-import com.alibaba.csp.sentinel.util.StringUtil;
 import com.lion.common.dao.parameter.ParameterDao;
 import com.lion.common.entity.parameter.Parameter;
+import com.lion.common.mapper.ParameterMapper;
 import com.lion.common.service.parameter.ParameterService;
+import com.lion.common.vo.ParameterListVo;
+import com.lion.common.vo.ParameterTreeVo;
 import com.lion.core.service.impl.BaseServiceImpl;
 import com.lion.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -48,20 +49,15 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
     }
 
     @Override
-    public List<Parameter> findByParentCode(String code) {
-        return parameterDao.findAllByParentCode(code);
-    }
-
-    @Override
     public void deleteByIds(List<Long> ids) {
         ids.forEach(i->{
             com.lion.core.Optional<Parameter> optional = findById(i);
             if (optional.isPresent()){
                 Parameter parameter = optional.get();
-                List<Parameter> childList = findByParentCode(parameter.getCode());
+                List<Parameter> childList = parameterDao.findAllByParentId(parameter.getId());
                 if (Objects.nonNull(childList) && childList.size() > 0){
                     childList.forEach(child ->{
-                        deleteByParentCode(child.getCode());
+                        deleteByParentId(child.getId());
                         delete(child);
                     });
                 }
@@ -70,11 +66,25 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
         });
     }
 
-    public void deleteByParentCode(String code) {
-            List<Parameter> parentCodeList = findByParentCode(code);
+    @Override
+    public List<ParameterTreeVo> listTree(Long id) {
+        List<Parameter> allByParentId = parameterDao.findAllByParentId(id);
+        List<ParameterTreeVo> parameterTreeVos = ParameterMapper.INSTANCE.listToTreeList(allByParentId);
+        if (Objects.nonNull(parameterTreeVos) && parameterTreeVos.size() > 0){
+            parameterTreeVos.forEach(parameter -> {
+                List<ParameterTreeVo> treeVoListById = listTree(parameter.getId());
+                parameter.setChildList(treeVoListById);
+            });
+        }
+        return parameterTreeVos;
+    }
+
+
+    public void deleteByParentId(Long id) {
+            List<Parameter> parentCodeList = parameterDao.findAllByParentId(id);
             if (Objects.nonNull(parentCodeList) && parentCodeList.size()>0){
                 parentCodeList.forEach(parameter -> {
-                    deleteByParentCode(parameter.getCode());
+                    deleteByParentId(parameter.getId());
                     delete(parameter);
                 });
             }
