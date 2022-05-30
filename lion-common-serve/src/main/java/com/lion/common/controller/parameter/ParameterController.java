@@ -4,6 +4,7 @@ import com.lion.common.dto.CuParameterDto;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.mapper.ParameterMapper;
 import com.lion.common.service.parameter.ParameterService;
+import com.lion.common.vo.ParameterDetailTreeVo;
 import com.lion.common.vo.ParameterListVo;
 import com.lion.common.vo.ParameterTreeVo;
 import com.lion.constant.SearchConstant;
@@ -108,6 +109,12 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         }
         Parameter parameter = optional.get();
         return ResultData.instance().setData(parameter);
+    }
+
+    @ApiOperation(value = "获取详情",notes = "获取详情")
+    @GetMapping("/detail/tree")
+    public IResultData<ParameterDetailTreeVo> detailTree(@NotBlank String code){
+        return ResultData.instance().setData(parameterService.detailTree(code));
     }
 
     @ApiOperation(value = "删除参数设置(直接关联或者间接关联的都会删除)",notes = "删除参数设置(直接关联或者间接关联的都会删除)")

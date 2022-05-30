@@ -1,6 +1,7 @@
 package com.lion.common.dao.parameter;
 
 import com.lion.common.entity.parameter.Parameter;
+import com.lion.common.vo.ParameterTreeVo;
 import com.lion.core.persistence.curd.BaseDao;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ParameterDao extends BaseDao<Parameter>, ParameterDaoEx {
 //    public List<Parameter> findAllByParentCode(String parentCode);
 
     public List<Parameter> findAllByParentId(Long id);
+
+    public List<Parameter> findAllByName(String name);
 }

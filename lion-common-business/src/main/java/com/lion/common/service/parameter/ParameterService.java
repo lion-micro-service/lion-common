@@ -1,6 +1,7 @@
 package com.lion.common.service.parameter;
 
 import com.lion.common.entity.parameter.Parameter;
+import com.lion.common.vo.ParameterDetailTreeVo;
 import com.lion.common.vo.ParameterTreeVo;
 import com.lion.core.service.BaseService;
 
@@ -43,4 +44,6 @@ public interface ParameterService extends BaseService<Parameter> {
     public void deleteByIds(List<Long> ids);
 
     public List<ParameterTreeVo> listTree(Long id);
+
+    public ParameterDetailTreeVo detailTree(String code);
 }

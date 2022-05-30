@@ -4,10 +4,11 @@ import com.lion.common.dao.parameter.ParameterDao;
 import com.lion.common.entity.parameter.Parameter;
 import com.lion.common.mapper.ParameterMapper;
 import com.lion.common.service.parameter.ParameterService;
-import com.lion.common.vo.ParameterListVo;
+import com.lion.common.vo.ParameterDetailTreeVo;
 import com.lion.common.vo.ParameterTreeVo;
 import com.lion.core.service.impl.BaseServiceImpl;
 import com.lion.exception.BusinessException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +78,22 @@ public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements 
             });
         }
         return parameterTreeVos;
+    }
+
+    @Override
+    public ParameterDetailTreeVo detailTree(String code) {
+        Optional<Parameter> codeOptional = parameterDao.findFirstByCode(code);
+        if (codeOptional.isEmpty()){
+            BusinessException.throwException("没有找到当前code："+code);
+        }
+        Parameter parameter = codeOptional.get();
+        ParameterDetailTreeVo vo = new ParameterDetailTreeVo();
+        BeanUtils.copyProperties(parameter,vo);
+        List<Parameter> allByParentId = parameterDao.findAllByParentId(vo.getId());
+        if (Objects.nonNull(allByParentId) && allByParentId.size()>0){
+             vo.setParameters(allByParentId);
+        }
+        return vo;
     }
 
 
