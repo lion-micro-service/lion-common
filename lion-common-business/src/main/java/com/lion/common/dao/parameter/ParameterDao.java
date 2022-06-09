@@ -17,14 +17,16 @@ public interface ParameterDao extends BaseDao<Parameter>, ParameterDaoEx {
 
     /**
      * 根据编码查询参数设置
+     *
      * @param code
      * @return
      */
     public Optional<Parameter> findFirstByCode(String code);
 
-//    public List<Parameter> findAllByParentCode(String parentCode);
-
-    public List<Parameter> findAllByParentId(Long id);
-
-    public List<Parameter> findAllByName(String name);
+    /**
+     * 根据父ID查询子参数
+     *
+     * @param parentId
+     */
+    public List<Parameter> findAllByParentId(Long parentId);
 }
