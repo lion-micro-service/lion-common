@@ -43,6 +43,7 @@ public class FileExposeServiceImpl extends BaseServiceImpl<File> implements File
 
     @Override
     public Optional<FileDefinition> getById(Long id) {
+
         Optional<File> optional = findById(id);
         if (optional.isPresent()){
             return Optional.of(FileMapper.INSTANCE.entityToDefinition(optional.get()));
