@@ -126,7 +126,7 @@ public class ParameterServiceImpl implements ParameterService {
 
     @Override
     public List<ParameterTreeVo> listTree(Long id) {
-        List<Parameter> allByParentId = parameterDao.findAllByParentId(id);
+        List<Parameter> allByParentId = parameterDao.findAllByParentIdOrderBySortAsc(id);
         List<ParameterTreeVo> parameterTreeVos = ParameterMapper.INSTANCE.listToTreeList(allByParentId);
         if (Objects.nonNull(parameterTreeVos) && parameterTreeVos.size() > 0) {
             parameterTreeVos.forEach(parameter -> {
@@ -146,7 +146,7 @@ public class ParameterServiceImpl implements ParameterService {
         Parameter parameter = codeOptional.get();
         ParameterDetailTreeVo vo = new ParameterDetailTreeVo();
         BeanUtils.copyProperties(parameter, vo);
-        List<Parameter> allByParentId = parameterDao.findAllByParentId(vo.getId());
+        List<Parameter> allByParentId = parameterDao.findAllByParentIdOrderBySortAsc(vo.getId());
         if (Objects.nonNull(allByParentId) && allByParentId.size() > 0) {
             vo.setParameters(allByParentId);
         }
