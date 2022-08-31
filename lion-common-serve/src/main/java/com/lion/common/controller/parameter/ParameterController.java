@@ -109,18 +109,18 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
 //        return new PageResultData<>(parameterListVos, lionPage, navigator.getTotalElements());
 //    }
 
-//    @GetMapping("/list/tree")
-////    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
-//    @ApiOperation(value = "树形列表", notes = "树形列表")
-//    public IResultData<List<ParameterTreeVo>> listTree() {
-//        return ResultData.instance().setData(parameterService.listTree(0L));
-//    }
+    @GetMapping("/list/tree")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_LIST')")
+    @ApiOperation(value = "树形列表", notes = "树形列表")
+    public IResultData<List<ParameterTreeVo>> listTree() {
+        return ResultData.instance().setData(parameterService.listTree(0L));
+    }
 
-//    @ApiOperation(value = "获取详情", notes = "获取详情")
-//    @GetMapping("/detail/tree")
-//    public IResultData<ParameterDetailTreeVo> detailTree(@NotBlank String code) {
-//        return ResultData.instance().setData(parameterService.detailTree(code));
-//    }
+    @ApiOperation(value = "获取详情", notes = "获取详情")
+    @GetMapping("/detail/tree")
+    public IResultData<ParameterDetailTreeVo> detailTree(@NotBlank String code) {
+        return ResultData.instance().setData(parameterService.detailTree(code));
+    }
 
 //    @ApiOperation(value = "删除参数设置(直接关联或者间接关联的都会删除)", notes = "删除参数设置(直接关联或者间接关联的都会删除)")
 //    @DeleteMapping("/delete")

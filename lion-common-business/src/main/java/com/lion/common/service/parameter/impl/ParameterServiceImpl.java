@@ -124,34 +124,34 @@ public class ParameterServiceImpl implements ParameterService {
 //        });
 //    }
 
-//    @Override
-//    public List<ParameterTreeVo> listTree(Long id) {
-//        List<Parameter> allByParentId = parameterDao.findAllByParentId(id);
-//        List<ParameterTreeVo> parameterTreeVos = ParameterMapper.INSTANCE.listToTreeList(allByParentId);
-//        if (Objects.nonNull(parameterTreeVos) && parameterTreeVos.size() > 0) {
-//            parameterTreeVos.forEach(parameter -> {
-//                List<ParameterTreeVo> treeVoListById = listTree(parameter.getId());
-//                parameter.setChildList(treeVoListById);
-//            });
-//        }
-//        return parameterTreeVos;
-//    }
+    @Override
+    public List<ParameterTreeVo> listTree(Long id) {
+        List<Parameter> allByParentId = parameterDao.findAllByParentId(id);
+        List<ParameterTreeVo> parameterTreeVos = ParameterMapper.INSTANCE.listToTreeList(allByParentId);
+        if (Objects.nonNull(parameterTreeVos) && parameterTreeVos.size() > 0) {
+            parameterTreeVos.forEach(parameter -> {
+                List<ParameterTreeVo> treeVoListById = listTree(parameter.getId());
+                parameter.setChildList(treeVoListById);
+            });
+        }
+        return parameterTreeVos;
+    }
 
-//    @Override
-//    public ParameterDetailTreeVo detailTree(String code) {
-//        Optional<Parameter> codeOptional = parameterDao.findFirstByCode(code);
-//        if (codeOptional.isEmpty()) {
-//            BusinessException.throwException("没有找到当前code：" + code);
-//        }
-//        Parameter parameter = codeOptional.get();
-//        ParameterDetailTreeVo vo = new ParameterDetailTreeVo();
-//        BeanUtils.copyProperties(parameter, vo);
-//        List<Parameter> allByParentId = parameterDao.findAllByParentId(vo.getId());
-//        if (Objects.nonNull(allByParentId) && allByParentId.size() > 0) {
-//            vo.setParameters(allByParentId);
-//        }
-//        return vo;
-//    }
+    @Override
+    public ParameterDetailTreeVo detailTree(String code) {
+        Optional<Parameter> codeOptional = parameterDao.findFirstByCode(code);
+        if (codeOptional.isEmpty()) {
+            BusinessException.throwException("没有找到当前code：" + code);
+        }
+        Parameter parameter = codeOptional.get();
+        ParameterDetailTreeVo vo = new ParameterDetailTreeVo();
+        BeanUtils.copyProperties(parameter, vo);
+        List<Parameter> allByParentId = parameterDao.findAllByParentId(vo.getId());
+        if (Objects.nonNull(allByParentId) && allByParentId.size() > 0) {
+            vo.setParameters(allByParentId);
+        }
+        return vo;
+    }
 
 //    public void deleteByParentId(Long id) {
 //        List<Parameter> parentCodeList = parameterDao.findAllByParentId(id);

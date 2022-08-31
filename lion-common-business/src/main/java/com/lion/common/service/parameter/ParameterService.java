@@ -77,7 +77,7 @@ public interface ParameterService {
 //     */
 //    public void deleteByIds(List<Long> ids);
 
-//    public List<ParameterTreeVo> listTree(Long id);
+    public List<ParameterTreeVo> listTree(Long id);
 
-//    public ParameterDetailTreeVo detailTree(String code);
+    public ParameterDetailTreeVo detailTree(String code);
 }
