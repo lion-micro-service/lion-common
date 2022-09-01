@@ -31,4 +31,6 @@ public interface ParameterDao extends BaseDao<Parameter>, ParameterDaoEx {
     public List<Parameter> findAllByParentIdOrderBySortAsc(Long parentId);
 
     List<Parameter> findAllByParentId(Long parentId);
+
+    void deleteByParentId(Long id);
 }

@@ -104,23 +104,23 @@ public class ParameterServiceImpl implements ParameterService {
 //        return parameterDao.findFirstByCode(code);
 //    }
 
-//    @Override
-//    public void deleteByIds(List<Long> ids) {
-//        ids.forEach(i -> {
-//            com.lion.core.Optional<Parameter> optional = findById(i);
-//            if (optional.isPresent()) {
-//                Parameter parameter = optional.get();
-//                List<Parameter> childList = parameterDao.findAllByParentId(parameter.getId());
-//                if (Objects.nonNull(childList) && childList.size() > 0) {
-//                    childList.forEach(child -> {
-//                        deleteByParentId(child.getId());
-//                        delete(child);
-//                    });
-//                }
-//            }
-//            deleteById(i);
-//        });
-//    }
+    @Override
+    public void deleteByIds(List<Long> ids) {
+        ids.forEach(id -> {
+            Optional<Parameter> optional = parameterDao.findById(id);
+            if (optional.isPresent()) {
+                Parameter parameter = optional.get();
+                List<Parameter> childList = parameterDao.findAllByParentId(parameter.getId());
+                if (Objects.nonNull(childList) && childList.size() > 0) {
+                    childList.forEach(child -> {
+                        deleteByParentId(child.getId());
+                        parameterDao.delete(child);
+                    });
+                }
+            }
+            deleteById(id);
+        });
+    }
 
     @Override
     public List<ParameterTreeVo> listTree(Long id) {
@@ -151,15 +151,15 @@ public class ParameterServiceImpl implements ParameterService {
         return vo;
     }
 
-//    public void deleteByParentId(Long id) {
-//        List<Parameter> parentCodeList = parameterDao.findAllByParentId(id);
-//        if (Objects.nonNull(parentCodeList) && parentCodeList.size() > 0) {
-//            parentCodeList.forEach(parameter -> {
-//                deleteByParentId(parameter.getId());
-//                delete(parameter);
-//            });
-//        }
-//    }
+    public void deleteByParentId(Long id) {
+        List<Parameter> parentCodeList = parameterDao.findAllByParentId(id);
+        if (Objects.nonNull(parentCodeList) && parentCodeList.size() > 0) {
+            parentCodeList.forEach(parameter -> {
+                deleteByParentId(parameter.getId());
+            });
+            parameterDao.deleteAll(parentCodeList);
+        }
+    }
 
     /**
      * 检查编码是否存在

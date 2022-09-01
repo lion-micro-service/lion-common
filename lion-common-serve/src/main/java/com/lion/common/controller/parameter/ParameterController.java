@@ -122,12 +122,12 @@ public class ParameterController extends BaseControllerImpl implements BaseContr
         return ResultData.instance().setData(parameterService.detailTree(code));
     }
 
-//    @ApiOperation(value = "删除参数设置(直接关联或者间接关联的都会删除)", notes = "删除参数设置(直接关联或者间接关联的都会删除)")
-//    @DeleteMapping("/delete")
-////    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
-//    public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id", required = false) @ApiParam(value = "数组(id=1&id=2)") List<Long> id) {
-//        parameterService.deleteByIds(id);
-//        ResultData resultData = ResultData.instance();
-//        return resultData;
-//    }
+    @ApiOperation(value = "删除参数设置(直接关联或者间接关联的都会删除)", notes = "删除参数设置(直接关联或者间接关联的都会删除)")
+    @DeleteMapping("/delete")
+//    @PreAuthorize("hasAuthority('SYSTEM_SETTINGS_PARAMETER_DELETE')")
+    public IResultData delete(@NotNull(message = "id不能为空") @RequestParam(value = "id", required = false) @ApiParam(value = "数组(id=1&id=2)") List<Long> id) {
+        parameterService.deleteByIds(id);
+        ResultData resultData = ResultData.instance();
+        return resultData;
+    }
 }
