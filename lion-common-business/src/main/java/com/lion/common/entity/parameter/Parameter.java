@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_parameter",indexes = {@Index(columnList = "create_date_time") ,@Index(columnList = "tenant_id"),@Index(columnList = "name"),@Index(columnList = "code"),@Index(columnList = "parent_id"),@Index(columnList = "sort")})
 @SQLDelete(sql = "update t_parameter set is_delete = 1 where id = ? and version = ?")
-@Where(clause = " is_delete=0 and tenant_id = ? ")
+@Where(clause = " is_delete=0 ")
 @Data
 public class Parameter extends ParameterDefinition {
 
