@@ -31,5 +31,5 @@ public interface FileExposeService {
      * @param ids
      * @return
      */
-    public List<FileDefinition> getByIds(List<Serializable> ids);
+    public List<FileDefinition> getByIds(List<Long> ids);
 }

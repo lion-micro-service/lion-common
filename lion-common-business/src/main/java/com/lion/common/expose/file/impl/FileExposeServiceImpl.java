@@ -53,7 +53,7 @@ public class FileExposeServiceImpl extends BaseServiceImpl<File> implements File
     }
 
     @Override
-    public List<FileDefinition> getByIds(List<Serializable> ids) {
+    public List<FileDefinition> getByIds(List ids) {
         List<File> files = findAllById(ids);
         if (Objects.nonNull(files) && files.size()>0){
             return FileMapper.INSTANCE.convertToDefinitionList(files);
