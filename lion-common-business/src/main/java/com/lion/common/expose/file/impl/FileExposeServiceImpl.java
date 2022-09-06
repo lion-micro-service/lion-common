@@ -10,6 +10,7 @@ import com.lion.core.service.impl.BaseServiceImpl;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,6 +59,6 @@ public class FileExposeServiceImpl extends BaseServiceImpl<File> implements File
         if (Objects.nonNull(files) && files.size()>0){
             return FileMapper.INSTANCE.convertToDefinitionList(files);
         }
-        return null;
+        return new ArrayList<>();
     }
 }
