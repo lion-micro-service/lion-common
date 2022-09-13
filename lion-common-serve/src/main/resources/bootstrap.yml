@@ -8,7 +8,7 @@ spring:
 #    host: 172.16.30.130:8848
 #    namespace: 7d03f927-32d1-4fa3-810d-9a5311ec5bf1
     host: 192.168.8.163:8848
-    namespace: 6d3c6f4b-4f82-424d-940a-c275929bbdbd
+    namespace: dbf2e1b3-7030-432f-9429-d11873de005d
   application:
     name: @project.artifactId@
   cloud:
