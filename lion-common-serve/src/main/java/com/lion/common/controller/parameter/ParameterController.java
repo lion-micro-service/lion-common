@@ -1,34 +1,20 @@
 package com.lion.common.controller.parameter;
 
-import com.lion.common.dto.CuParameterDto;
-import com.lion.common.entity.parameter.Parameter;
-import com.lion.common.mapper.ParameterMapper;
 import com.lion.common.service.parameter.ParameterService;
-import com.lion.common.vo.ParameterDetailTreeVo;
-import com.lion.common.vo.ParameterListVo;
-import com.lion.common.vo.ParameterTreeVo;
 import com.lion.common.vo.ParameterVo;
-import com.lion.constant.SearchConstant;
 import com.lion.core.*;
 import com.lion.core.controller.BaseController;
 import com.lion.core.controller.impl.BaseControllerImpl;
-import com.lion.core.persistence.JpqlParameter;
 import com.lion.core.persistence.Validator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author mr.liu
