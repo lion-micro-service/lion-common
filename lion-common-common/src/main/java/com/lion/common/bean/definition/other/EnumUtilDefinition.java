@@ -25,11 +25,15 @@ public class EnumUtilDefinition extends BaseEntity {
     private static final long serialVersionUID = -2124525197256620973L;
 
     @Schema(description = "枚举key值")
-    @Column(name = "class",nullable = false,unique = true)
-    private String classs;
+    @Column(name = "code",nullable = false,unique = true)
+    private String code;
 
     @Schema(description = "枚举value值")
     @Column(name = "value",nullable = false,length = 2000)
     private String value;
+
+    @Schema(description = "枚举版本")
+    @Column(name = "data_version",nullable = false)
+    private String dataVersion;
 
 }
