@@ -8,6 +8,7 @@ import com.lion.common.service.file.FileUploadService;
 import com.lion.core.Optional;
 import com.lion.core.service.impl.BaseServiceImpl;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,7 +36,7 @@ public class FileExposeServiceImpl extends BaseServiceImpl<File> implements File
         if (!Objects.equals(url.substring(0,1),"/")) {
             url = "/"+url;
         }
-        if (url.indexOf("/file")<0){
+        if (StringUtils.hasText(FileUploadService.URL_PREFIX)&&url.indexOf(FileUploadService.URL_PREFIX)<0){
             url = FileUploadService.URL_PREFIX+url;
         }
         return url;
