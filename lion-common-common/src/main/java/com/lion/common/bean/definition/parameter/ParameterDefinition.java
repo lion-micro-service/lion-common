@@ -30,7 +30,7 @@ public class ParameterDefinition extends BaseEntity {
 
     @Column(name = "parent_id")
     @Schema(description = "父id")
-    private Long parentId ;
+    private Long parentId = 0L ;
 
     @Column(name = "sort")
     @Schema(description = "sort")

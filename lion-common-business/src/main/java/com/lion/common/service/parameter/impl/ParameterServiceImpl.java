@@ -47,6 +47,9 @@ public class ParameterServiceImpl implements ParameterService {
     @Override
     public void save(ParameterVo parameterVo) {
         Parameter parameter = ParameterMapper.INSTANCE.parameterVoToEntity(parameterVo);
+        if (Objects.isNull(parameter.getParentId())) {
+            parameter.setParentId(0L);
+        }
         checkParameterExist(parameter);
         parameterDao.save(parameter);
     }
